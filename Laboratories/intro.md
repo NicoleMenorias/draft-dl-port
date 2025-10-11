@@ -7,7 +7,7 @@
   <img src="../assets/logo.png" alt="Logo" class="cover-logo"/>
   <h1>Laboratory Experiments</h1>
   <p>Hands-on coding sessions and applied data experiments.<br>
-  Click any laboratory card below to open its interactive notebook.</p>
+  Click a laboratory card below to explore each interactive notebook.</p>
 
   <div class="gallery-grid">
     <a class="gallery-card" href="../Laboratories/laboratory1.html">
@@ -38,7 +38,7 @@
 </div>
 
 <style>
-/* === Overall page cover === */
+/* === General layout === */
 .cover {
   display: flex;
   flex-direction: column;
@@ -48,88 +48,107 @@
   text-align: center;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(20,20,20,1), rgba(45,45,45,1));
-  color: #f9f9f9;
+  background: linear-gradient(145deg, #0d0d0d, #1b1b1b);
+  color: #f5f5f5;
   font-family: 'Poppins', sans-serif;
 }
 
+/* === Floating Logo === */
 .cover-logo {
   width: 120px;
   margin-bottom: 1.2rem;
   animation: float 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 8px rgba(255,255,255,0.2));
+  filter: drop-shadow(0 0 12px rgba(255,255,255,0.25));
 }
 
-/* === Subtle floating orbs for background glow === */
+/* === Glow Orbs for Ambient Light === */
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.25;
+  filter: blur(100px);
+  opacity: 0.2;
   animation: pulse 10s infinite alternate;
 }
 
 .orb:nth-child(1) {
   width: 400px;
   height: 400px;
-  background: rgba(255,255,255,0.05);
-  top: -50px;
-  left: -100px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(200,200,200,0.08));
+  top: -60px;
+  left: -120px;
 }
 
 .orb:nth-child(2) {
-  width: 400px;
-  height: 400px;
-  background: rgba(255,255,255,0.05);
-  bottom: -80px;
-  right: -120px;
+  width: 500px;
+  height: 500px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(150,150,150,0.05));
+  bottom: -100px;
+  right: -150px;
 }
 
-/* === Grid layout: 2 columns, 3 rows === */
+/* === 3×2 Grid === */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, minmax(240px, 1fr));
   gap: 2rem;
   margin-top: 3rem;
-  width: 85%;
-  max-width: 900px;
+  width: 90%;
+  max-width: 1100px;
 }
 
-/* === Flash card styling === */
+/* === Glassmorphic Card === */
 .gallery-card {
   display: block;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 16px;
-  padding: 1.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 18px;
+  padding: 2rem 1.5rem;
   text-decoration: none;
-  color: #f5f5f5;
-  backdrop-filter: blur(15px) brightness(1.1);
-  transition: all 0.35s ease;
-  box-shadow: 0 0 25px rgba(0,0,0,0.4);
-}
-
-.gallery-card:hover {
-  transform: translateY(-10px);
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 10px 40px rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.12);
+  color: #f1f1f1;
+  backdrop-filter: blur(15px) saturate(140%);
+  transition: all 0.4s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
 }
 
 .gallery-card h3 {
-  font-size: 1.3rem;
-  margin-bottom: 0.4rem;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
   color: #ffffff;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
 .gallery-card p {
-  font-size: 0.95rem;
-  color: #cfcfcf;
+  font-size: 0.9rem;
+  color: #cccccc;
 }
 
-/* === Responsive behavior for smaller screens === */
-@media (max-width: 768px) {
+/* === Hover Animation === */
+.gallery-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255,255,255,0.12);
+  box-shadow: 0 8px 40px rgba(255,255,255,0.08);
+}
+
+/* === Highlight Effect on Hover === */
+.gallery-card:hover h3 {
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255,255,255,0.7);
+}
+
+.gallery-card:hover p {
+  color: #e0e0e0;
+}
+
+/* === Responsive === */
+@media (max-width: 992px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
   .gallery-grid {
     grid-template-columns: 1fr;
   }
