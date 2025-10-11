@@ -17,6 +17,9 @@ html:
   extra_js:
     - assets/custom.js
 
+  # 🚫 Remove the right sidebar
+  sidebar_secondary: false
+
 sphinx:
   config:
     html_theme_options:
@@ -26,6 +29,12 @@ sphinx:
       collapse_navigation: true
       sticky_navigation: true
       navigation_depth: 4
+      # Hide right sidebar for sphinx_book_theme
+      launch_buttons: {}
+      use_fullscreen_button: false
+      show_toc_in_sidebar: true
+      use_download_button: false
+      use_repository_button: false
 
 dependencies:
   - requirements.txt
