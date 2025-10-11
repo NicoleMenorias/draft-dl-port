@@ -6,19 +6,31 @@ only_build_toc_files: true
 
 html:
   favicon: "assets/favicon.ico"
-  use_repository_button: false
-  use_edit_page_button: false
-  use_issues_button: false
   extra_footer: |
     <p style="text-align:center;">© 2025 Your Name | Built with ❤️ using Jupyter Book</p>
-
   extra_css:
     - assets/custom.css
   extra_js:
     - assets/custom.js
+  theme:
+    name: pydata_sphinx_theme
+    options:
+      # 🧭 Navigation and layout options
+      navigation_with_keys: true
+      show_navbar_depth: 2
+      show_toc_level: 1
+      collapse_navigation: true
+      sticky_navigation: true
+      navigation_depth: 4
 
-  # 🚫 Remove the right sidebar
-  sidebar_secondary: false
+      # 🚫 Remove the blank right sidebar
+      secondary_sidebar_items: []
+
+      # Optional layout tweaks (feel free to keep or remove)
+      use_edit_page_button: false
+      use_repository_button: false
+      use_download_button: false
+      show_prev_next: true
 
 sphinx:
   config:
@@ -29,12 +41,6 @@ sphinx:
       collapse_navigation: true
       sticky_navigation: true
       navigation_depth: 4
-      # Hide right sidebar for sphinx_book_theme
-      launch_buttons: {}
-      use_fullscreen_button: false
-      show_toc_in_sidebar: true
-      use_download_button: false
-      use_repository_button: false
 
 dependencies:
   - requirements.txt
