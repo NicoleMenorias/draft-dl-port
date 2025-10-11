@@ -1,15 +1,15 @@
-# **📘 Lecture Gallery**
+# **Lecture**
 
 <p align="center">
-Explore my lecture notes and interactive notebooks.  
-Each lecture covers a key concept with explanations, code demos, and visualizations.
+Hands-on coding sessions and applied data experiments.  
+Click a laboratory card below to explore each interactive notebook.
 </p>
 
 <div class="gallery-section">
 
   <a class="gallery-card" href="../Lectures/lecture1.html">
-    <h3>Lecture 1</h3>
-    <p>Foundations and Core Concepts</p>
+    <h3>Laboratory 1</h3>
+    <p>Exploring Data Fundamentals</p>
   </a>
 
 </div>
@@ -17,9 +17,9 @@ Each lecture covers a key concept with explanations, code demos, and visualizati
 ---
 
 <style>
-/* === Page Background (dark gray-black, matches theme) === */
+/* === Page Background (matches uploaded color) === */
 body, .bd-article-container {
-  background-color: #121212 !important;
+  background-color: #121212 !important; /* deep dark gray-black */
   color: #e0e0e0 !important;
 }
 
@@ -39,7 +39,7 @@ body, .bd-article-container {
   justify-content: center;
 }
 
-/* === Glassmorphism Cards === */
+/* === Glassmorphism Cards (Dark theme) === */
 .gallery-card {
   display: block;
   background: rgba(255, 255, 255, 0.04);
@@ -91,7 +91,7 @@ h1, h2, h3 {
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-/* === Responsive Layout === */
+/* === Responsive === */
 @media (max-width: 900px) {
   .gallery-section {
     grid-template-columns: 1fr;
