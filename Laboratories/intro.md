@@ -42,10 +42,10 @@
 .bd-content,
 .bd-main .bd-content,
 .bd-article-container {
-  max-width: 1200px !important;     /* wider but still aligned visually */
+  max-width: 1400px !important;     /* Much wider content zone */
   margin: 0 auto !important;
-  padding-left: 2rem !important;    /* adds space on sides to prevent hover clipping */
-  padding-right: 2rem !important;
+  padding-left: 3rem !important;    /* Gentle side space to prevent clipping */
+  padding-right: 3rem !important;
 }
 
 /* === Cover Layout === */
@@ -100,11 +100,11 @@
 /* === Grid Layout === */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
   margin-top: 3rem;
   width: 100%;
-  padding: 0 1rem; /* gives side breathing space */
+  padding: 0 2rem; /* balanced space on edges */
   box-sizing: border-box;
 }
 
@@ -124,7 +124,7 @@
 }
 
 .gallery-card h3 {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: #ffffff;
@@ -132,7 +132,7 @@
 }
 
 .gallery-card p {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: #cccccc;
 }
 
@@ -146,7 +146,7 @@
 
 .gallery-card:hover h3 {
   color: #ffffff;
-  text-shadow: 0 0 8px rgba(255,255,255,0.7);
+  text-shadow: 0 0 10px rgba(255,255,255,0.8);
 }
 
 .gallery-card:hover p {
@@ -154,17 +154,21 @@
 }
 
 /* === Responsive Design === */
+@media (max-width: 1200px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, minmax(240px, 1fr));
+  }
+}
+
 @media (max-width: 992px) {
   .gallery-grid {
     grid-template-columns: repeat(2, minmax(220px, 1fr));
-    gap: 1.5rem;
   }
 }
 
 @media (max-width: 600px) {
   .gallery-grid {
     grid-template-columns: 1fr;
-    gap: 1.2rem;
   }
 }
 
