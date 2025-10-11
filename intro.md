@@ -1,89 +1,97 @@
 # Welcome to My Portfolio Gallery
 
 <div class="cover">
-  <img src="assets/logo.png" alt="Logo" class="cover-logo"/>
+  <div class="orb"></div>
+  <div class="orb"></div>
 
+  <img src="assets/logo.png" alt="Logo" class="cover-logo"/>
   <h1>Welcome to My Portfolio Gallery</h1>
   <p>Explore my lectures, laboratories, and projects — all built in Jupyter Notebook.</p>
 
   <div class="tab-header">
-    <div class="tab" onclick="window.location.href='Lectures/intro.html'">📘 Lectures</div>
-    <div class="tab" onclick="window.location.href='Laboratories/intro.html'">🧪 Laboratories</div>
-    <div class="tab" onclick="window.location.href='Projects/intro.html'">💡 Projects</div>
+    <a class="tab" href="Lectures/intro.html">📘 Lectures</a>
+    <a class="tab" href="Laboratories/intro.html">🧪 Laboratories</a>
+    <a class="tab" href="Projects/intro.html">💡 Projects</a>
   </div>
-
-  <div class="glow-orb"></div>
-  <div class="glow-orb"></div>
 </div>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const orbs = document.querySelectorAll(".glow-orb");
-  document.addEventListener("mousemove", (e) => {
-    orbs.forEach((orb, i) => {
-      const speed = (i + 1) * 0.03;
-      orb.style.transform = `translate(${e.clientX * speed}px, ${e.clientY * speed}px)`;
-    });
-  });
-});
-</script>
-
 <style>
-body {
-  background: radial-gradient(circle at top left, #0a0f1a, #1a2b40);
-  color: #f8f9fa;
-  font-family: "Inter", sans-serif;
-  margin: 0;
-  overflow-x: hidden;
-}
-
 .cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
   text-align: center;
-  padding: 6rem 2rem;
   position: relative;
+  overflow: hidden;
 }
 
 .cover-logo {
-  width: 100px;
+  width: 150px;
   margin-bottom: 1.5rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: pulse 8s infinite alternate;
+}
+
+.orb:nth-child(1) {
+  width: 300px;
+  height: 300px;
+  background: #00e6ff;
+  top: -50px;
+  left: -100px;
+}
+
+.orb:nth-child(2) {
+  width: 400px;
+  height: 400px;
+  background: #ff00d4;
+  bottom: -80px;
+  right: -120px;
 }
 
 .tab-header {
   display: flex;
   justify-content: center;
-  gap: 2.5rem;
-  margin-top: 3rem;
+  gap: 2rem;
+  margin-top: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .tab {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 30px;
-  padding: 1rem 2rem;
+  text-decoration: none;
   cursor: pointer;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
   font-weight: 600;
-  letter-spacing: 0.5px;
   transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  color: #f5f5f5;
 }
 
 .tab:hover {
   background: linear-gradient(90deg, #00e6ff, #ff00d4);
-  color: transparent;
   -webkit-background-clip: text;
-  transform: translateY(-5px);
-  box-shadow: 0 0 25px rgba(0, 230, 255, 0.3);
+  -webkit-text-fill-color: transparent;
+  transform: translateY(-3px);
 }
 
-.glow-orb {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0,230,255,0.25), transparent);
-  top: 10%;
-  left: 30%;
-  filter: blur(60px);
-  z-index: -1;
-  transition: transform 0.3s ease-out;
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+  from { transform: scale(1); opacity: 0.3; }
+  to { transform: scale(1.2); opacity: 0.5; }
 }
 </style>
