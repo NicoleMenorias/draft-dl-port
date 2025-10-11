@@ -1,38 +1,15 @@
-# 📘 Lectures Overview
+# 📘 Lecture Gallery
 
-Welcome to the **Lectures Section**.  
-Here you’ll find all lecture notebooks with key concepts and exercises.
+<div class="section-intro">
+  <div class="glass-card">
+    <h1>Lectures Overview</h1>
+    <p>Explore my lecture notes and interactive notebooks. Each lecture covers a key concept with explanations, code demos, and visualizations.</p>
+  </div>
 
----
-
-<div class="lecture-list">
-  <div class="lecture-card" onclick="window.location.href='lecture1.html'">Lecture 1 — Introduction</div>
-  <div class="lecture-card" onclick="window.location.href='lecture2.html'">Lecture 2 — Data Preprocessing</div>
-  <div class="lecture-card" onclick="window.location.href='lecture3.html'">Lecture 3 — Model Training</div>
+  <div class="gallery">
+    <div class="gallery-card" onclick="window.location.href='lecture1.html'">
+      <h3>Lecture 1</h3>
+      <p>Foundations and Core Concepts</p>
+    </div>
+  </div>
 </div>
-
-<style>
-.lecture-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-
-.lecture-card {
-  background: rgba(255,255,255,0.08);
-  border-radius: 15px;
-  padding: 1.5rem 2rem;
-  width: 250px;
-  text-align: center;
-  font-weight: 600;
-  transition: 0.3s ease;
-  cursor: pointer;
-}
-
-.lecture-card:hover {
-  background: linear-gradient(90deg, #00e6ff44, #ff00d444);
-  transform: translateY(-5px);
-}
-</style>
