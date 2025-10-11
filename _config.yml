@@ -22,7 +22,6 @@ html:
       collapse_navigation: true
       sticky_navigation: true
       navigation_depth: 4
-      logo_only: true
       day_night_switcher: false
 
       # 🚫 Remove the blank right sidebar
