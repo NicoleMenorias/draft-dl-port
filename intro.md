@@ -1,44 +1,15 @@
----
-jupytext:
-  formats: md:myst
-  text_representation:
-    extension: .md
-    format_name: myst
-kernelspec:
-  display_name: Python 3
-  language: python
-  name: python3
----
+# Deep Learning Portfolio
 
-# 👋 Welcome to My Portfolio Gallery
+**Owner: Nicole S. Menorias**
 
-<div class="tab-header">
-  <div class="tab active" onclick="openTab('lectures')">📘 Lectures</div>
-  <div class="tab" onclick="openTab('laboratories')">🔬 Laboratories</div>
-  <div class="tab" onclick="openTab('projects')">💡 Projects</div>
-</div>
+Welcome to my **Deep Learning Portfolio**, a collection of projects, lectures, and laboratory work that demonstrate my journey in machine learning and AI.  
 
-<div class="tab-content active" id="lectures">
-  <div class="portfolio-card" onclick="navigateTo('Lectures/lecture1.html')">
-    <h2>Lecture 1</h2>
-    <p>Introduction and Concepts</p>
-  </div>
-</div>
+This book is organized into sections to make it easy to explore different aspects of my work:
 
-<div class="tab-content" id="laboratories">
-  <div class="portfolio-card" onclick="navigateTo('Laboratories/laboratory1.html')">
-    <h2>Laboratory 1</h2>
-    <p>Exploring the basics</p>
-  </div>
-  <div class="portfolio-card" onclick="navigateTo('Laboratories/laboratory2.html')">
-    <h2>Laboratory 2</h2>
-    <p>Deeper data exploration</p>
-  </div>
-</div>
+- **Projects** → end-to-end deep learning applications and experiments  
+- **Lectures** → study notes, concepts, and key ideas in AI and neural networks  
+- **Laboratories** → hands-on coding exercises, model implementations, and practice tasks  
 
-<div class="tab-content" id="projects">
-  <div class="portfolio-card" onclick="navigateTo('Projects/project1.html')">
-    <h2>Project 1</h2>
-    <p>Final Capstone Project</p>
-  </div>
-</div>
+You can navigate through the sections using the sidebar or the table of contents below.  
+
+```{tableofcontents}
