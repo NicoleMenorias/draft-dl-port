@@ -1,15 +1,9 @@
----
-title: "My Portfolio Gallery"
----
-
-# 🧪 Laboratory Experiments
+# **🧪 Laboratory Experiments**
 
 <p align="center">
-  <img src="assets/logo.png" alt="Logo" width="120">
-</p>
-
 Hands-on coding sessions and applied data experiments.  
 Click a laboratory card below to explore each interactive notebook.
+</p>
 
 <div class="gallery-section">
 
@@ -48,20 +42,20 @@ Click a laboratory card below to explore each interactive notebook.
 ---
 
 <style>
-/* === Match JupyterBook's Dark Theme === */
+/* === Page Background (matches uploaded color) === */
 body, .bd-article-container {
-  background-color: #000 !important; /* True black background */
+  background-color: #121212 !important; /* deep dark gray-black */
   color: #e0e0e0 !important;
 }
 
-/* === Page Layout Width Control === */
+/* === Content Layout === */
 .bd-article-container {
   max-width: 95% !important;
   margin: 0 auto !important;
   padding: 0 2.5rem !important;
 }
 
-/* === Grid Layout (2 per row) === */
+/* === Gallery Grid (2 per row) === */
 .gallery-section {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -70,23 +64,23 @@ body, .bd-article-container {
   justify-content: center;
 }
 
-/* === Glassmorphism Cards (Black/Grey/White Aesthetic) === */
+/* === Glassmorphism Cards (Dark theme) === */
 .gallery-card {
   display: block;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1.5rem;
   padding: 2.5rem;
   text-decoration: none;
   color: #f5f5f5;
   text-align: center;
-  backdrop-filter: blur(16px) saturate(120%);
-  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
   transition: all 0.35s ease;
-  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
 }
 
-/* === Card Titles === */
+/* === Titles === */
 .gallery-card h3 {
   font-size: 1.4rem;
   margin-bottom: 0.6rem;
@@ -94,23 +88,23 @@ body, .bd-article-container {
   color: #ffffff;
 }
 
-/* === Card Descriptions === */
+/* === Descriptions === */
 .gallery-card p {
   font-size: 0.95rem;
   color: #cccccc;
 }
 
-/* === Hover Effects (Soft White Glow) === */
+/* === Hover Effects === */
 .gallery-card:hover {
   transform: translateY(-10px) scale(1.03);
-  border-color: rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.12);
 }
 
 .gallery-card:hover h3 {
   color: #ffffff;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
 }
 
 .gallery-card:hover p {
