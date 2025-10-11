@@ -1,13 +1,13 @@
-title: "My Portfolio Gallery"
-author: "Your Name"
-logo: "assets/logo.png"
+title: "Deep Learning Portfolio"
+author: "Nicole Menorias"
+logo: "jupyter.png"
 
 only_build_toc_files: true
 
 html:
   favicon: "assets/favicon.ico"
   extra_footer: |
-    <p style="text-align:center;">© 2025 Your Name | Built with ❤️ using Jupyter Book</p>
+    <p style="text-align:center;">© 2025 DS413: Deep Learning | Built with ❤️ using Jupyter Book</p>
   extra_css:
     - assets/custom.css
   extra_js:
@@ -22,6 +22,8 @@ html:
       collapse_navigation: true
       sticky_navigation: true
       navigation_depth: 4
+      logo_only: true
+      day_night_switcher: false
 
       # 🚫 Remove the blank right sidebar
       secondary_sidebar_items: []
@@ -31,6 +33,7 @@ html:
       use_repository_button: false
       use_download_button: false
       show_prev_next: true
+
 
 sphinx:
   config:

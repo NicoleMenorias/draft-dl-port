@@ -1,11 +1,8 @@
-# Welcome to My Portfolio Gallery
-
 <div class="cover">
   <div class="orb"></div>
   <div class="orb"></div>
 
-  <img src="assets/logo.png" alt="Logo" class="cover-logo"/>
-  <h1>Welcome to My Portfolio Gallery</h1>
+   <h1>Welcome to My Portfolio Gallery</h1>
   <p>Explore my lectures, laboratories, and projects — all built in Jupyter Notebook.</p>
 
   <div class="tab-header">
