@@ -38,14 +38,14 @@
 </div>
 
 <style>
-/* === Main Content Alignment === */
+/* === Layout Width Alignment === */
 .bd-content,
 .bd-main .bd-content,
 .bd-article-container {
-  max-width: 1400px !important;     /* Much wider content zone */
+  max-width: 1000px !important;    /* keeps content aligned with top navbar icons */
   margin: 0 auto !important;
-  padding-left: 3rem !important;    /* Gentle side space to prevent clipping */
-  padding-right: 3rem !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
 }
 
 /* === Cover Layout === */
@@ -61,7 +61,9 @@
   background: linear-gradient(145deg, #0d0d0d, #1b1b1b);
   color: #f5f5f5;
   font-family: 'Poppins', sans-serif;
-  padding: 3rem 0;
+  width: 100%;
+  max-width: 100vw;
+  padding: 2rem 0;
 }
 
 /* === Floating Logo === */
@@ -72,7 +74,7 @@
   filter: drop-shadow(0 0 12px rgba(255,255,255,0.25));
 }
 
-/* === Ambient Orbs === */
+/* === Ambient Glow Orbs === */
 .orb {
   position: absolute;
   border-radius: 50%;
@@ -97,18 +99,16 @@
   right: -150px;
 }
 
-/* === Grid Layout === */
+/* === Grid Layout (3x2) === */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2.5rem;
+  grid-template-columns: repeat(3, minmax(240px, 1fr));
+  gap: 2rem;
   margin-top: 3rem;
   width: 100%;
-  padding: 0 2rem; /* balanced space on edges */
-  box-sizing: border-box;
 }
 
-/* === Card Style === */
+/* === Card Styling (Glassmorphism) === */
 .gallery-card {
   display: block;
   background: rgba(255, 255, 255, 0.05);
@@ -120,11 +120,10 @@
   backdrop-filter: blur(15px) saturate(140%);
   transition: all 0.4s ease;
   box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-  overflow: hidden;
 }
 
 .gallery-card h3 {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: #ffffff;
@@ -132,7 +131,7 @@
 }
 
 .gallery-card p {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #cccccc;
 }
 
@@ -146,23 +145,17 @@
 
 .gallery-card:hover h3 {
   color: #ffffff;
-  text-shadow: 0 0 10px rgba(255,255,255,0.8);
+  text-shadow: 0 0 8px rgba(255,255,255,0.7);
 }
 
 .gallery-card:hover p {
   color: #e0e0e0;
 }
 
-/* === Responsive Design === */
-@media (max-width: 1200px) {
-  .gallery-grid {
-    grid-template-columns: repeat(3, minmax(240px, 1fr));
-  }
-}
-
+/* === Responsive Adjustments === */
 @media (max-width: 992px) {
   .gallery-grid {
-    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
   }
 }
 
@@ -172,7 +165,7 @@
   }
 }
 
-/* === Animations === */
+/* === Subtle Animations === */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
