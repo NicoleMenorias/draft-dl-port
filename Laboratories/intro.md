@@ -38,14 +38,14 @@
 </div>
 
 <style>
-/* === Layout Width Alignment === */
+/* === Main Content Alignment === */
 .bd-content,
 .bd-main .bd-content,
 .bd-article-container {
-  max-width: 1000px !important;    /* keeps content aligned with top navbar icons */
+  max-width: 1200px !important;     /* wider but still aligned visually */
   margin: 0 auto !important;
-  padding-left: 1rem !important;
-  padding-right: 1rem !important;
+  padding-left: 2rem !important;    /* adds space on sides to prevent hover clipping */
+  padding-right: 2rem !important;
 }
 
 /* === Cover Layout === */
@@ -61,9 +61,7 @@
   background: linear-gradient(145deg, #0d0d0d, #1b1b1b);
   color: #f5f5f5;
   font-family: 'Poppins', sans-serif;
-  width: 100%;
-  max-width: 100vw;
-  padding: 2rem 0;
+  padding: 3rem 0;
 }
 
 /* === Floating Logo === */
@@ -74,7 +72,7 @@
   filter: drop-shadow(0 0 12px rgba(255,255,255,0.25));
 }
 
-/* === Ambient Glow Orbs === */
+/* === Ambient Orbs === */
 .orb {
   position: absolute;
   border-radius: 50%;
@@ -99,16 +97,18 @@
   right: -150px;
 }
 
-/* === Grid Layout (3x2) === */
+/* === Grid Layout === */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   margin-top: 3rem;
   width: 100%;
+  padding: 0 1rem; /* gives side breathing space */
+  box-sizing: border-box;
 }
 
-/* === Card Styling (Glassmorphism) === */
+/* === Card Style === */
 .gallery-card {
   display: block;
   background: rgba(255, 255, 255, 0.05);
@@ -120,6 +120,7 @@
   backdrop-filter: blur(15px) saturate(140%);
   transition: all 0.4s ease;
   box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  overflow: hidden;
 }
 
 .gallery-card h3 {
@@ -152,20 +153,22 @@
   color: #e0e0e0;
 }
 
-/* === Responsive Adjustments === */
+/* === Responsive Design === */
 @media (max-width: 992px) {
   .gallery-grid {
-    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    gap: 1.5rem;
   }
 }
 
 @media (max-width: 600px) {
   .gallery-grid {
     grid-template-columns: 1fr;
+    gap: 1.2rem;
   }
 }
 
-/* === Subtle Animations === */
+/* === Animations === */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
