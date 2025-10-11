@@ -48,20 +48,20 @@ Click a laboratory card below to explore each interactive notebook.
 ---
 
 <style>
-/* === Background Gradient for Coding Eyes === */
+/* === Match JupyterBook's Dark Theme === */
 body, .bd-article-container {
-  background: radial-gradient(circle at top left, #0b132b 0%, #1c2541 50%, #1b2a49 100%) !important;
-  color: #e8f1f2 !important;
+  background-color: #000 !important; /* True black background */
+  color: #e0e0e0 !important;
 }
 
-/* === Layout width control === */
+/* === Page Layout Width Control === */
 .bd-article-container {
   max-width: 95% !important;
   margin: 0 auto !important;
   padding: 0 2.5rem !important;
 }
 
-/* === Grid layout (2 per row) === */
+/* === Grid Layout (2 per row) === */
 .gallery-section {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -70,56 +70,56 @@ body, .bd-article-container {
   justify-content: center;
 }
 
-/* === Glassmorphism Cards with Gradient Glow === */
+/* === Glassmorphism Cards (Black/Grey/White Aesthetic) === */
 .gallery-card {
   display: block;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 1.5rem;
   padding: 2.5rem;
   text-decoration: none;
-  color: #f1f1f1;
+  color: #f5f5f5;
   text-align: center;
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
   transition: all 0.35s ease;
-  box-shadow: 0 6px 20px rgba(0, 255, 255, 0.05);
+  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.05);
 }
 
-/* === Text inside cards === */
+/* === Card Titles === */
 .gallery-card h3 {
   font-size: 1.4rem;
   margin-bottom: 0.6rem;
   font-weight: 600;
-  color: #a5f3fc;
-  letter-spacing: 0.3px;
+  color: #ffffff;
 }
 
+/* === Card Descriptions === */
 .gallery-card p {
   font-size: 0.95rem;
-  color: #b0bec5;
+  color: #cccccc;
 }
 
-/* === Hover Effects (Neon Glow) === */
+/* === Hover Effects (Soft White Glow) === */
 .gallery-card:hover {
   transform: translateY(-10px) scale(1.03);
-  border-color: rgba(0, 255, 255, 0.45);
-  background: rgba(0, 255, 255, 0.12);
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
 }
 
 .gallery-card:hover h3 {
-  color: #e0ffff;
-  text-shadow: 0 0 15px rgba(0, 255, 255, 0.9);
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
 .gallery-card:hover p {
-  color: #e0f7fa;
+  color: #f0f0f0;
 }
 
-/* === Subtle Header Glow === */
+/* === Headings Glow === */
 h1, h2, h3 {
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 /* === Responsive === */
