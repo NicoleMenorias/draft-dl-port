@@ -1,21 +1,15 @@
 # 🧪 Laboratory Tasks
 
-<div class="tab-header">
-  <div class="tab" onclick="navigateTab('Lectures/intro.md')">Lectures</div>
-  <div class="tab active" onclick="navigateTab('Laboratories/intro.md')">Laboratories</div>
-  <div class="tab" onclick="navigateTab('Projects/intro.md')">Projects</div>
-</div>
-
 <div class="section-intro">
   <div class="glass-card">
     <h1>Laboratory Experiments</h1>
-    <p>Hands-on coding sessions and applied data experiments. Each lab explores key topics introduced in lectures through applied, notebook-based work.</p>
+    <p>Hands-on coding sessions and applied data experiments. Click a lab to open its interactive notebook.</p>
   </div>
 
   <div class="gallery">
     <div class="gallery-card" onclick="navigateToNotebook('Laboratories/laboratory1.ipynb')">
       <h3>Laboratory 1</h3>
-      <p>Fundamentals & Setup</p>
+      <p>Exploring Data Fundamentals</p>
     </div>
 
     <div class="gallery-card" onclick="navigateToNotebook('Laboratories/laboratory2.ipynb')">

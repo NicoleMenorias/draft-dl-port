@@ -48,3 +48,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 200);
   }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll(".gallery-card");
+  cards.forEach(card => {
+    card.addEventListener("mousemove", e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty("--x", `${x}px`);
+      card.style.setProperty("--y", `${y}px`);
+    });
+  });
+});
+
+function navigateToNotebook(path) {
+  // If using Jupyter Book, .ipynb notebooks are converted to .html automatically
+  const notebookHtml = path.replace(".ipynb", ".html");
+  window.location.href = `/${notebookHtml}`;
+}
+
