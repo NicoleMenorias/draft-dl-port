@@ -1,4 +1,4 @@
-// --- Animated Tab Switching with Smooth Motion ---
+// --- Animated Tabs with Gradient Motion ---
 document.addEventListener("DOMContentLoaded", () => {
   const tabButtons = document.querySelectorAll(".tab-btn");
   const tabContents = document.querySelectorAll(".tab-content");
@@ -16,11 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
     indicator.style.transform = `translateX(${rect.left - parentRect.left}px)`;
   };
 
-  // Initialize on load
+  // Initialize
   const active = document.querySelector(".tab-btn.active");
   if (active) moveIndicator(active);
 
-  // Handle tab click
+  // Tab click
   tabButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       if (btn.classList.contains("active")) return;

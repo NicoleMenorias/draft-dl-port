@@ -1,0 +1,53 @@
+name: deep-learning-portfolio
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  # --- Core Python ---
+  - python=3.10
+  - pip
+  - jupyter
+  - jupyterlab
+  - jupyter-book
+  - jupytext
+  - myst-parser
+  - nbformat
+  - nbconvert
+
+  # --- Documentation / Theme ---
+  - sphinx
+  - sphinx-book-theme
+  - sphinx-copybutton
+  - sphinx-togglebutton
+  - sphinx-design
+  - sphinx-external-toc
+  - sphinx-thebe
+
+  # --- Data Science Stack ---
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - plotly
+  - scikit-learn
+
+  # --- Deep Learning Stack ---
+  - pytorch
+  - torchvision
+  - torchaudio
+  - tqdm
+
+  # --- Optional utilities ---
+  - ipywidgets
+  - requests
+  - pyyaml
+
+  # --- For CSS/JS live rebuilds ---
+  - livereload
+
+  # --- Install pip packages not in conda (if needed) ---
+  - pip:
+      - notebook
+      - black
+      - isort
+      - rich
