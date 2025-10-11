@@ -26,4 +26,8 @@ sphinx:
       collapse_navigation: true
       sticky_navigation: true
       navigation_depth: 4
-      
+
+dependencies:
+  - requirements.txt
+  - environment.yml
+  - conda-requirements.txt
