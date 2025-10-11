@@ -42,9 +42,9 @@
 .bd-content,
 .bd-main .bd-content,
 .bd-article-container {
-  max-width: 1550px !important;     /* slightly wider layout */
+  max-width: 1500px !important;     /* Slightly wider container */
   margin: 0 auto !important;
-  padding-left: 4rem !important;    /* more comfortable side spacing */
+  padding-left: 4rem !important;    /* More breathing room at the sides */
   padding-right: 4rem !important;
 }
 
@@ -100,11 +100,11 @@
 /* === Grid Layout === */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* same card size */
-  gap: 2.5rem;  /* spacing between cards */
-  margin-top: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem; /* Increased space between cards */
+  margin-top: 3.5rem;
   width: 100%;
-  padding: 0 3rem; /* slightly more breathing room on the sides */
+  padding: 0 3rem; /* more space on edges */
   box-sizing: border-box;
 }
 
@@ -156,13 +156,14 @@
 /* === Responsive Design === */
 @media (max-width: 1200px) {
   .gallery-grid {
-    grid-template-columns: repeat(3, minmax(240px, 1fr));
+    grid-template-columns: repeat(3, minmax(260px, 1fr));
+    gap: 2.5rem;
   }
 }
 
 @media (max-width: 992px) {
   .gallery-grid {
-    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
   }
 }
 
