@@ -1,11 +1,13 @@
+# 🧪 Laboratory Experiments
+
 <div class="cover">
   <div class="orb"></div>
   <div class="orb"></div>
 
   <img src="../assets/logo.png" alt="Logo" class="cover-logo"/>
   <h1>Laboratory Experiments</h1>
-  <p>Hands-on coding sessions and applied data experiments.  
-  Click any laboratory card below to explore its interactive notebook.</p>
+  <p>Hands-on coding sessions and applied data experiments.<br>
+  Click any laboratory card below to open its interactive notebook.</p>
 
   <div class="gallery-grid">
     <a class="gallery-card" href="../Laboratories/laboratory1.html">
@@ -36,7 +38,7 @@
 </div>
 
 <style>
-/* === Global cover styling === */
+/* === Overall page cover === */
 .cover {
   display: flex;
   flex-direction: column;
@@ -46,7 +48,8 @@
   text-align: center;
   position: relative;
   overflow: hidden;
-  color: #fff;
+  background: linear-gradient(135deg, rgba(20,20,20,1), rgba(45,45,45,1));
+  color: #f9f9f9;
   font-family: 'Poppins', sans-serif;
 }
 
@@ -54,21 +57,22 @@
   width: 120px;
   margin-bottom: 1.2rem;
   animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.2));
 }
 
-/* === Animated background orbs === */
+/* === Subtle floating orbs for background glow === */
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.4;
-  animation: pulse 8s infinite alternate;
+  filter: blur(120px);
+  opacity: 0.25;
+  animation: pulse 10s infinite alternate;
 }
 
 .orb:nth-child(1) {
-  width: 300px;
-  height: 300px;
-  background: #00e6ff;
+  width: 400px;
+  height: 400px;
+  background: rgba(255,255,255,0.05);
   top: -50px;
   left: -100px;
 }
@@ -76,53 +80,59 @@
 .orb:nth-child(2) {
   width: 400px;
   height: 400px;
-  background: #ff00d4;
+  background: rgba(255,255,255,0.05);
   bottom: -80px;
   right: -120px;
 }
 
-/* === Flash card grid layout === */
+/* === Grid layout: 2 columns, 3 rows === */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(2, minmax(300px, 1fr));
   gap: 2rem;
   margin-top: 3rem;
-  width: 90%;
-  max-width: 1000px;
+  width: 85%;
+  max-width: 900px;
 }
 
-/* === Individual flash card style === */
+/* === Flash card styling === */
 .gallery-card {
   display: block;
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
   padding: 1.8rem;
   text-decoration: none;
-  color: #fff;
-  backdrop-filter: blur(12px);
-  transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  color: #f5f5f5;
+  backdrop-filter: blur(15px) brightness(1.1);
+  transition: all 0.35s ease;
+  box-shadow: 0 0 25px rgba(0,0,0,0.4);
 }
 
 .gallery-card:hover {
-  transform: translateY(-8px) scale(1.04);
-  border-color: rgba(255, 255, 255, 0.35);
-  box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
-  background: linear-gradient(135deg, rgba(0,230,255,0.2), rgba(255,0,212,0.2));
+  transform: translateY(-10px);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 10px 40px rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.12);
 }
 
 .gallery-card h3 {
   font-size: 1.3rem;
   margin-bottom: 0.4rem;
-  background: linear-gradient(90deg, #00e6ff, #ff00d4);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #ffffff;
+  letter-spacing: 0.5px;
 }
 
 .gallery-card p {
   font-size: 0.95rem;
-  color: #ddd;
+  color: #cfcfcf;
+}
+
+/* === Responsive behavior for smaller screens === */
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* === Animations === */
@@ -132,7 +142,7 @@
 }
 
 @keyframes pulse {
-  from { transform: scale(1); opacity: 0.3; }
-  to { transform: scale(1.2); opacity: 0.5; }
+  from { transform: scale(1); opacity: 0.25; }
+  to { transform: scale(1.15); opacity: 0.4; }
 }
 </style>
