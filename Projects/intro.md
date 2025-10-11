@@ -1,3 +1,4 @@
+```{raw} html
 # 💡 Projects
 
 <div class="section-intro">
@@ -13,3 +14,4 @@
     </div>
   </div>
 </div>
+```
