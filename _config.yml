@@ -13,10 +13,10 @@ logo: "logo.png"
 # Execution Settings
 # ---------------------------------------------------------
 execute:
-  execute_notebooks: force   # Always re-run notebooks on build
-  cache: true                # Cache results to speed up rebuilds
-  allow_errors: false        # Stop build on any error (set true to continue despite errors)
-  timeout: 180               # Max execution time per notebook (seconds)
+  execute_notebooks: force
+  cache: "_build/.jupyter_cache"
+  timeout: 300  # optional, allows long-running cells
+
 
 # ---------------------------------------------------------
 # References
