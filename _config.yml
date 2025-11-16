@@ -41,6 +41,18 @@ html:
       sticky_navigation: true
       navigation_depth: 4
 
+      # === Remove right sidebar ===
+      secondary_sidebar_items: []     # disables sidebar content
+      use_page_toc: false             # disables automatic right TOC
+
+      # === Remove top-right widgets ===
+      use_edit_page_button: false
+      use_repository_button: false
+      use_issues_button: false
+      use_download_button: false
+      icon_links: []                  # removes icons on upper-right
+
+
       # ===== UI REMOVALS =====
 
       # Remove right-side widgets (GitHub, theme switcher, search, etc.)
