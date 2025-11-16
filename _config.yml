@@ -13,7 +13,7 @@ exclude_patterns:
   - .venv/**
   - _build/**
   - .jupyter_cache/**
-  - references.bib   # moved here for clarity
+  - references.bib
 
 # Markdown engine
 markdown_engine: myst
@@ -40,12 +40,28 @@ html:
       collapse_navigation: true
       sticky_navigation: true
       navigation_depth: 4
+
+      # ===== UI REMOVALS =====
+
+      # Remove right-side widgets (GitHub, theme switcher, search, etc.)
+      navbar_end: []
+      navbar_persistent: []
+
+      # Disable right sidebar completely
       secondary_sidebar_items: []
-      use_page_toc: false      # disables right-hand TOC globally
+      show_sidebar: false
+
+      # Remove page-level TOC
+      use_page_toc: false
+
+      # Disable additional buttons
       use_edit_page_button: false
       use_repository_button: false
       use_download_button: false
+
+      # Keep prev/next buttons for navigation
       show_prev_next: true
+
   use_liquid: false
 
 # Sphinx configuration
