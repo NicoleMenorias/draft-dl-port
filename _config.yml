@@ -1,9 +1,28 @@
+# =========================
+# Jupyter Book Configuration
+# =========================
+
 title: "Deep Learning Portfolio"
 author: "Nicole Menorias"
 logo: "jupyter.png"
 
 only_build_toc_files: true
 
+# Exclude folders and files that confuse Sphinx / Jekyll
+exclude_patterns:
+  - .venv/**
+  - _build/**
+  - .jupyter_cache/**
+  - references.bib   # moved here for clarity
+
+# Markdown engine
+markdown_engine: myst
+
+# Notebook execution
+execute:
+  execute_notebooks: "off"
+
+# HTML / theme configuration
 html:
   favicon: "assets/favicon.ico"
   extra_footer: |
@@ -15,23 +34,21 @@ html:
   theme:
     name: pydata_sphinx_theme
     options:
-      # 🧭 Navigation and layout options
       navigation_with_keys: true
       show_navbar_depth: 2
       show_toc_level: 1
       collapse_navigation: true
       sticky_navigation: true
       navigation_depth: 4
-
-      # 🚫 Remove the blank right sidebar
       secondary_sidebar_items: []
-
-      # Optional layout tweaks (feel free to keep or remove)
+      use_page_toc: false      # disables right-hand TOC globally
       use_edit_page_button: false
       use_repository_button: false
       use_download_button: false
       show_prev_next: true
+  use_liquid: false
 
+# Sphinx configuration
 sphinx:
   config:
     html_theme_options:
@@ -42,16 +59,6 @@ sphinx:
       sticky_navigation: true
       navigation_depth: 4
 
+# Dependencies
 dependencies:
   - requirements.txt
-
-  # Prevent notebook execution during build
-execute:
-  execute_notebooks: "off"
-
-# Exclude folders that confuse Sphinx
-exclude_patterns:
-  - .venv/**
-  - _build/**
-  - .jupyter_cache/**
-
