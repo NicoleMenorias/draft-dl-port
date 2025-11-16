@@ -444,13 +444,15 @@ Updated Bias: [1.52136242]
 </div>
 </div>
 </div>
-<p><strong>Observations:</strong></p>
+<p><strong>Observations &amp; Insights</strong></p>
 <ul class="simple">
-<li><p>The predicted output (2.67) is higher than the target (1), showing error exists.</p></li>
-<li><p>Gradient values are non-zero only for active inputs (1st and 3rd features).</p></li>
-<li><p>Both weights and bias are slightly reduced, nudging the output closer to the target.</p></li>
-<li><p>Learning rate (0.001) leads to very small adjustments → training is stable but gradual.</p></li>
-<li><p>Loss remains relatively high, indicating more updates are needed for convergence.</p></li>
+<li><p>Training loss shows <strong>large fluctuations</strong> (e.g., ~18 at epoch 300 but &gt;6000 at epoch 500), indicating instability with SGD on small batches.</p></li>
+<li><p>Despite fluctuations, the model can occasionally reach <strong>very low training losses (~15)</strong>, meaning it has the capacity to fit the dataset.</p></li>
+<li><p>The <strong>final training loss (~14.9)</strong> is much lower than the early epochs, showing the model does learn patterns over time.</p></li>
+<li><p>The <strong>final test loss (~2920.8)</strong> is high compared to training loss, suggesting <strong>overfitting</strong> and poor generalization.</p></li>
+<li><p>Using the Diabetes dataset (small sample size, noisy target) contributes to unstable convergence.</p></li>
+<li><p>Two fully connected layers give the model more flexibility, but with <strong>SGD (no momentum)</strong> and <strong>batch size of 8</strong>, the optimization remains noisy.</p></li>
+<li><p>Overall: the model fits training data but struggles to generalize, highlighting dataset limitations and optimizer instability.</p></li>
 </ul>
 </section>
 
