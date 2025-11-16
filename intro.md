@@ -34,7 +34,7 @@
       <a class="tab" href="Laboratories/intro.html">Laboratories</a>
     </div>
     <div class="tab-container">
-      <a class="tab" href="Project/intro.html">Project</a>
+      <a class="tab" href="./Project/intro.html">Project</a>
     </div>
   </div>
 
