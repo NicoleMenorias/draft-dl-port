@@ -17,7 +17,7 @@
 
   <h2 class="typewriter"><strong>Learning through the D.E.E.P.</strong></h2>
   <p class="subtitle">
-    <strong>D</strong>efying <strong>E</strong>rrors, <strong>E</strong>mbracing <strong>P</strong>rogress 
+    <strong>D</strong>efying <strong>E</strong>rrors, <strong>E</strong>mbracing <strong>P</strong>rogress <br>
     — every mistake is a lesson, every challenge a step forward.
   </p>
 
@@ -34,7 +34,7 @@
       <a class="tab" href="Laboratories/intro.html">Laboratories</a>
     </div>
     <div class="tab-container">
-      <a class="tab" href="Projects/intro.html">Projects</a>
+      <a class="tab" href="Projects/intro.html">Project</a>
     </div>
   </div>
 
