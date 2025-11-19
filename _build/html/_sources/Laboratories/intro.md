@@ -36,6 +36,11 @@ In this section you will find hands-on coding tasks and applied data experiments
     <p>CNN Architecture Implementation</p>
   </a>
 
+  <a class="gallery-card" href="../Laboratories/laboratory7.html">
+    <h3>Laboratory 7</h3>
+    <p>Blog on Deep Learning Algorithm or Hyperparameter</p>
+  </a>
+
 </div>
 
 ---
