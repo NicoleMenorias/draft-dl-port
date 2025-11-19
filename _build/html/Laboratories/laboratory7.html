@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Finding the Right Starting Point: How Weight Initialization Acts as the GPS of Deep Learning &#8212; Deep Learning Portfolio</title>
+    <title>Laboratory 7 &#8212; Deep Learning Portfolio</title>
   
   
   
@@ -187,7 +187,7 @@
 <li class="toctree-l1"><a class="reference internal" href="laboratory4.html"><strong>Laboratory Task 4</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="laboratory5.html"><strong>Laboratory Task 5</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="laboratory6.html"><strong>Laboratory Task 6</strong></a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Finding the Right Starting Point: How Weight Initialization Acts as the GPS of Deep Learning</strong></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Laboratory 7</strong></a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Section 3</span></p>
 <ul class="nav bd-sidenav">
@@ -332,7 +332,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Finding the Right Starting Point: How Weight Initialization Acts as the GPS of Deep Learning</h1>
+    <h1>Laboratory 7</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -342,6 +342,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-right-starting-point-how-weight-initialization-acts-as-the-gps-of-deep-learning"><strong>Finding the Right Starting Point: How Weight Initialization Acts as the GPS of Deep Learning</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-landscape-and-the-traveler"><strong>The Landscape and the Traveler</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-weight-initialization-actually-does"><strong>What Weight Initialization Actually Does</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-right-gps-coordinates-criteria-for-initialization"><strong>Choosing the Right GPS Coordinates: Criteria For Initialization</strong></a></li>
@@ -382,8 +383,10 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="finding-the-right-starting-point-how-weight-initialization-acts-as-the-gps-of-deep-learning">
-<h1><strong>Finding the Right Starting Point: How Weight Initialization Acts as the GPS of Deep Learning</strong><a class="headerlink" href="#finding-the-right-starting-point-how-weight-initialization-acts-as-the-gps-of-deep-learning" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="laboratory-7">
+<h1><strong>Laboratory 7</strong><a class="headerlink" href="#laboratory-7" title="Link to this heading">#</a></h1>
+<section id="finding-the-right-starting-point-how-weight-initialization-acts-as-the-gps-of-deep-learning">
+<h2><strong>Finding the Right Starting Point: How Weight Initialization Acts as the GPS of Deep Learning</strong><a class="headerlink" href="#finding-the-right-starting-point-how-weight-initialization-acts-as-the-gps-of-deep-learning" title="Link to this heading">#</a></h2>
 <p>Before a neural network takes its first step toward learning — before it recognizes a digit, a shape, a cat, or a face — it begins with a single question:</p>
 <p><strong>“Where am I on this landscape?”</strong></p>
 <p>The answer to that question comes from
@@ -393,6 +396,7 @@ the very first coordinates your model is given.</p>
 If they’re bad… your model wanders, gets lost, or never moves at all.</p>
 <p>This is the story of how weight initialization shapes everything.</p>
 <p><img alt="Alt Text" src="../_images/weight1.png" /></p>
+</section>
 <section id="the-landscape-and-the-traveler">
 <h2><strong>The Landscape and the Traveler</strong><a class="headerlink" href="#the-landscape-and-the-traveler" title="Link to this heading">#</a></h2>
 <p>Imagine the loss surface — mountains, valleys, cliffs, flat deserts.</p>
@@ -1624,18 +1628,10 @@ He Init (Correct for ReLU) | Test Set Results → Loss=0.0605, Acc=99.00%
 <p><img alt="Alt Text" src="../_images/weight2.png" /></p>
 <p>A model’s journey through the loss landscape is long.
 Initialization determines whether it starts:</p>
-<blockquote>
-<div><p><em><strong>in a valley</strong></em></p>
-</div></blockquote>
-<blockquote>
-<div><p><em><strong>on a cliff</strong></em></p>
-</div></blockquote>
-<blockquote>
-<div><p><em><strong>in a desert</strong></em></p>
-</div></blockquote>
-<blockquote>
-<div><p><em><strong>or on a well-balanced plateau</strong></em></p>
-</div></blockquote>
+<p><em><strong>in a valley</strong></em></p>
+<p><em><strong>on a cliff</strong></em></p>
+<p><em><strong>in a desert</strong></em></p>
+<p><em><strong>or on a well-balanced plateau</strong></em></p>
 <p>Good initialization does not guarantee success —
 but bad initialization guarantees failure.</p>
 <p>Choosing the right weight initialization acts as the GPS, guiding your model past the traps and straight to the best starting point. <br>
@@ -1714,6 +1710,7 @@ The learning is complete, the journey is a success, and the model’s work is fi
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-right-starting-point-how-weight-initialization-acts-as-the-gps-of-deep-learning"><strong>Finding the Right Starting Point: How Weight Initialization Acts as the GPS of Deep Learning</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-landscape-and-the-traveler"><strong>The Landscape and the Traveler</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-weight-initialization-actually-does"><strong>What Weight Initialization Actually Does</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-right-gps-coordinates-criteria-for-initialization"><strong>Choosing the Right GPS Coordinates: Criteria For Initialization</strong></a></li>
