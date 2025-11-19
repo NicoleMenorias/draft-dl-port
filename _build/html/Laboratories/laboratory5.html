@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Laboratory Task 5 &#8212; Deep Learning Portfolio</title>
+    <title>5 Pytorch Basics &#8212; Deep Learning Portfolio</title>
   
   
   
@@ -60,8 +60,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Laboratories/laboratory5';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Laboratory Task 6" href="laboratory6.html" />
-    <link rel="prev" title="Laboratory Task 4" href="laboratory4.html" />
+    <link rel="next" title="CNN Architecture" href="laboratory6.html" />
+    <link rel="prev" title="4 Linear Regression Model" href="laboratory4.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -174,24 +174,25 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Section 1</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../Lectures/intro.html"><strong>Lecture</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Lectures/lecture1.html"><strong>Lecture Task 1</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/lecture1.html"><strong>1 Machine Learning: Living in the Age of AI | A WIRED Film</strong></a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Section 2</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="intro.html"><strong>Laboratory</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="laboratory1.html"><strong>Laboratory Task 1</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="laboratory2.html"><strong>Laboratory Task 2</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="laboratory3.html"><strong>Laboratory Task 3</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="laboratory4.html"><strong>Laboratory Task 4</strong></a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Laboratory Task 5</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="laboratory6.html"><strong>Laboratory Task 6</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="laboratory7.html"><strong>Finding the Right Starting Point: How Weight Initialization Acts as the GPS of Deep Learning</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="laboratory1.html"><strong>1 Types of Data Analytics</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="laboratory2.html"><strong>2 Single Forward Pass</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="laboratory3.html"><strong>3 Forward and Backward Propagation (ReLU)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="laboratory4.html"><strong>4 Linear Regression Model</strong></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>5 Pytorch Basics</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="laboratory6.html"><strong>CNN Architecture</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="laboratory7.html"><strong>7 Exploring Hyperparameters (Activation Functions and Optimizers)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="laboratory8.html"><strong>8 Finding the Right Starting Point: How Weight Initialization Acts as the GPS of Deep Learning</strong></a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Section 3</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../Project/intro.html"><strong>Project</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Project/Phase%201.html"><strong>Phase 1: Nov 10 - 16, 2025</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Project/Narrative%20Report%201.html"><strong>Narrative Report: Phase 1</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Project/Phase%201.html"><strong>Phase 1: Project Proposal</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Project/Narrative%20Report%201.html"><strong>Phase 1:Narrative Report</strong></a></li>
 </ul>
 
     </div>
@@ -328,7 +329,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Laboratory Task 5</h1>
+    <h1>5 Pytorch Basics</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -342,8 +343,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="laboratory-task-5">
-<h1><strong>Laboratory Task 5</strong><a class="headerlink" href="#laboratory-task-5" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="pytorch-basics">
+<h1><strong>5 Pytorch Basics</strong><a class="headerlink" href="#pytorch-basics" title="Link to this heading">#</a></h1>
 <ol class="arabic simple">
 <li><p>Perform Standard Imports</p></li>
 <li><p>Create a function called set_seed() that accepts seed: int as a parameter, this function must return nothing but just set the seed to a certain value.</p></li>
@@ -537,7 +538,7 @@ Think about what shape it should have to permit matrix multiplication.</p></li>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><strong>Laboratory Task 4</strong></p>
+        <p class="prev-next-title"><strong>4 Linear Regression Model</strong></p>
       </div>
     </a>
     <a class="right-next"
@@ -545,7 +546,7 @@ Think about what shape it should have to permit matrix multiplication.</p></li>
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><strong>Laboratory Task 6</strong></p>
+        <p class="prev-next-title"><strong>CNN Architecture</strong></p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
