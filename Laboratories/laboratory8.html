@@ -1,0 +1,1795 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>8 Finding the Right Starting Point: How Weight Initialization Acts as the GPS of Deep Learning &#8212; Deep Learning Portfolio</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=c73c0f3e"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Laboratories/laboratory8';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Project" href="../Project/intro.html" />
+    <link rel="prev" title="7 Exploring Hyperparameters (Activation Functions and Optimizers)" href="laboratory7.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/dl.png" class="logo__image only-light" alt="Deep Learning Portfolio - Home"/>
+    <script>document.write(`<img src="../_static/dl.png" class="logo__image only-dark" alt="Deep Learning Portfolio - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Section 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/intro.html"><strong>Lecture</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/lecture1.html"><strong>1 Machine Learning: Living in the Age of AI | A WIRED Film</strong></a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Section 2</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="intro.html"><strong>Laboratory</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="laboratory1.html"><strong>1 Types of Data Analytics</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="laboratory2.html"><strong>2 Single Forward Pass</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="laboratory3.html"><strong>3 Forward and Backward Propagation (ReLU)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="laboratory4.html"><strong>4 Linear Regression Model</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="laboratory5.html"><strong>5 Pytorch Basics</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="laboratory6.html"><strong>6 CNN Architecture</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="laboratory7.html"><strong>7 Exploring Hyperparameters (Activation Functions and Optimizers)</strong></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>8 Finding the Right Starting Point: How Weight Initialization Acts as the GPS of Deep Learning</strong></a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Section 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Project/intro.html"><strong>Project</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Project/Phase%201.html"><strong>Phase 1: Project Proposal</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Project/Narrative%20Report%201.html"><strong>Phase 1:Narrative Report</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Project/Phase%202.html"><strong>Phase 2: Data Collection and Preprocessing</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Project/Narrative%20Report%202.html"><strong>Phase 2: Narrative Report</strong></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Laboratories/laboratory8.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>8 Finding the Right Starting Point: How Weight Initialization Acts as the GPS of Deep Learning</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-landscape-and-the-traveler"><strong>The Landscape and the Traveler</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-weight-initialization-actually-does"><strong>What Weight Initialization Actually Does</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-right-gps-coordinates-criteria-for-initialization"><strong>Choosing the Right GPS Coordinates: Criteria For Initialization</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-main-initialization-methods-and-what-terrain-they-create"><strong>The Main Initialization Methods And What Terrain They Create</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experiment-cnn-on-mnist-with-different-initializations"><strong>Experiment: CNN on MNIST With Different Initializations</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cnn-model-relu-based"><strong>CNN Model (ReLU-based)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization-variants-we-tested"><strong>Initialization Variants We Tested</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#zero-initialization"><strong>Zero initialization</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#too-small-weights"><strong>Too-small weights</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#too-large-weights"><strong>Too-large weights</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#incorrect-relu-initializer-xavier"><strong>Incorrect ReLU initializer (Xavier)</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#correct-relu-initializer-he"><strong>Correct ReLU initializer (He)</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-loop"><strong>Training Loop</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-all-initializers"><strong>Run All Initializers</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-accuracy-and-loss"><strong>Plotting Accuracy and Loss</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-how-the-travelers-journey-changed"><strong>Results: How the Traveler’s Journey Changed</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zero-initialization-stuck-on-the-flat-plateau"><strong>Zero Initialization — Stuck on the Flat Plateau</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#too-small-random-initialization-tiptoeing-on-tiny-hills"><strong>Too Small Random Initialization — Tiptoeing on Tiny Hills</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#too-large-random-initialization-sliding-down-steep-cliffs"><strong>Too Large Random Initialization — Sliding Down Steep Cliffs</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xavier-initialization-the-balanced-plateau"><strong>Xavier Initialization — The Balanced Plateau</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#he-initialization-energizing-downhill"><strong>He Initialization — Energizing Downhill</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ending-the-story-starting-in-the-right-place"><strong>Ending the Story: Starting in the Right Place</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references"><strong>References</strong></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="finding-the-right-starting-point-how-weight-initialization-acts-as-the-gps-of-deep-learning">
+<h1><strong>8 Finding the Right Starting Point: How Weight Initialization Acts as the GPS of Deep Learning</strong><a class="headerlink" href="#finding-the-right-starting-point-how-weight-initialization-acts-as-the-gps-of-deep-learning" title="Link to this heading">#</a></h1>
+<p>Before a neural network takes its first step toward learning — before it recognizes a digit, a shape, a cat, or a face — it begins with a single question:</p>
+<p><strong>“Where am I on this landscape?”</strong></p>
+<p>The answer to that question comes from
+<em><strong>weight initialization</strong></em>, <br>
+the very first coordinates your model is given.</p>
+<p>If those coordinates are good, training becomes a smooth, confident journey. <br>
+If they’re bad… your model wanders, gets lost, or never moves at all.</p>
+<p>This is the story of how weight initialization shapes everything.</p>
+<p><img alt="Alt Text" src="../_images/weight1.png" /></p>
+<section id="the-landscape-and-the-traveler">
+<h2><strong>The Landscape and the Traveler</strong><a class="headerlink" href="#the-landscape-and-the-traveler" title="Link to this heading">#</a></h2>
+<p>Imagine the loss surface — mountains, valleys, cliffs, flat deserts.</p>
+<p>Your <strong>model</strong> is the <em>traveler</em>. <br>
+<strong>Gradient descent</strong> is its <em>compass</em>.<br>
+<strong>Optimization</strong> is the <em>journey</em>. <br>
+And <strong>weight initialization</strong> is the <em>starting location</em>.</p>
+<p>Start too high → the traveler slides uncontrollably (exploding gradients) <br>
+Start too low → everything looks flat (vanishing gradients) <br>
+Start at the same point → everyone takes the same path (symmetry) <br>
+Start at a good spot → good gradients, good learning, good destination <br></p>
+<p>Initialization looks tiny in code… but in practice, it creates the entire world your model begins in.</p>
+</section>
+<section id="what-weight-initialization-actually-does">
+<h2><strong>What Weight Initialization Actually Does</strong><a class="headerlink" href="#what-weight-initialization-actually-does" title="Link to this heading">#</a></h2>
+<p><strong>What is weight initialization?</strong></p>
+<p>According to Analytics Vidhya, weight initialization refers to how we assign the first values to a neural network’s weights before training begins. These initial values influence how easily gradients can flow through the network. Choosing the right initialization technique helps the model start in a balanced state so it can learn efficiently from the very first step.</p>
+<p>Deep networks repeatedly transform signals through layers.
+To train well, signals must flow stably. This depends on three things:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fan_in</span></code></p></li>
+</ol>
+<blockquote>
+<div><p>How many inputs a neuron receives.</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p><code class="docutils literal notranslate"><span class="pre">fan_out</span></code></p></li>
+</ol>
+<blockquote>
+<div><p>How many outputs it sends to the next layer.</p>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p><code class="docutils literal notranslate"><span class="pre">Activation</span> <span class="pre">function</span></code></p></li>
+</ol>
+<blockquote>
+<div><p>Controls how much the neuron “squishes” or “clips” information.</p>
+</div></blockquote>
+<p>Initialization formulas set the variance of weights based on these three, ensuring activations don’t explode, gradients don’t disappear, and all neurons learn differently.</p>
+</section>
+<section id="choosing-the-right-gps-coordinates-criteria-for-initialization">
+<h2><strong>Choosing the Right GPS Coordinates: Criteria For Initialization</strong><a class="headerlink" href="#choosing-the-right-gps-coordinates-criteria-for-initialization" title="Link to this heading">#</a></h2>
+<p>As we learned in the previous section, weight initialization sets the traveler’s <strong>starting location</strong> on the loss landscape, ensuring signals flow stably through the network. But how do we decide where exactly to start? Here are the key criteria, building on what we already know about <code class="docutils literal notranslate"><span class="pre">fan_in</span></code>, <code class="docutils literal notranslate"><span class="pre">fan_out</span></code>, and activation functions:</p>
+<p><strong>1. Activation Function — How the Compass Behaves</strong></p>
+<ul class="simple">
+<li><p>Different activations transform signals differently, like compasses that respond uniquely to terrain.</p></li>
+<li><p>A poor match between starting location and activation can cause:</p>
+<ul>
+<li><p><strong>Vanishing gradients</strong> → tiny steps, slow learning</p></li>
+<li><p><strong>Exploding gradients</strong> → sliding down cliffs, unstable training</p></li>
+</ul>
+</li>
+<li><p>Activation function remains the <strong>most important factor</strong> in choosing a starting point. Proper alignment between activation function and initialization prevents gradient issues and ensures the model converges faster and learns more efficiently from the first steps.</p></li>
+</ul>
+<p><strong>2. Model Depth — Length of the Journey</strong></p>
+<ul class="simple">
+<li><p>Deep networks are like long, multi-stage hikes.</p></li>
+<li><p>Small instabilities at the start amplify over layers.</p></li>
+<li><p>Proper initialization keeps signals stable across layers, preventing vanishing/exploding gradients and improving training stability and final performance.</p></li>
+</ul>
+<p><strong>3. Layer Size (fan_in / fan_out) — Width of the Trail</strong></p>
+<ul class="simple">
+<li><p>Wide layers → signals may become too strong, causing overshooting.</p></li>
+<li><p>Narrow layers → signals may be too weak, causing slow movement.</p></li>
+<li><p>Scaling weights according to layer size ensures consistent variance of activations, helping the model converge reliably and avoid divergence during training.Initialization formulas already take these into account, balancing the scale of weights so the traveler maintains control throughout the journey.</p></li>
+</ul>
+<p><strong>4. Dataset Size — Not Part of the Starting Point</strong></p>
+<ul class="simple">
+<li><p>Unlike training parameters or batch size, the dataset size doesn’t determine where the traveler begins.</p></li>
+<li><p>Choosing the starting location is about <strong>internal signal stability</strong>, not the number of training examples.</p></li>
+</ul>
+<p><strong>5. Architecture — Different Terrains Require Different Starting Locations</strong></p>
+<ul class="simple">
+<li><p>Different models represent different terrains:</p>
+<ul>
+<li><p><strong>CNNs</strong> → structured, grid-like paths</p></li>
+<li><p><strong>MLPs</strong> → broad open fields</p></li>
+<li><p><strong>RNNs / LSTMs</strong> → winding paths with memory</p></li>
+<li><p><strong>Transformers</strong> → multi-directional landscapes</p></li>
+</ul>
+</li>
+<li><p>The traveler’s starting point should suit the model’s landscape to ensure stable gradient flow, better generalization, and fewer training difficulties.</p></li>
+</ul>
+<p><em><strong>Note:</strong></em> Most of these criteria are already reflected in the formulas we use for initialization, which automatically scale weights based on <code class="docutils literal notranslate"><span class="pre">fan_in</span></code>, <code class="docutils literal notranslate"><span class="pre">fan_out</span></code>, and activation type. The next section will introduce the main initialization algorithms — the GPS tools that place the traveler optimally on the map.</p>
+</section>
+<section id="the-main-initialization-methods-and-what-terrain-they-create">
+<h2><strong>The Main Initialization Methods And What Terrain They Create</strong><a class="headerlink" href="#the-main-initialization-methods-and-what-terrain-they-create" title="Link to this heading">#</a></h2>
+<p>Choosing a weight initialization method is like picking the terrain where your traveler begins the journey. Different starting points create very different paths — some easy, some treacherous. Let’s explore the main methods:</p>
+<p><strong>1. Zero Initialization — Flat, Boring Plateau</strong></p>
+<p>Imagine placing every traveler at the exact same spot on the map, giving them identical compasses. In this scenario, every traveler would follow the same path, never exploring new routes.</p>
+<p>In neural networks, <strong>zero initialization</strong> works similarly: all neurons in a layer are assigned a weight of zero. This means every neuron receives identical gradients during backpropagation and updates in the same way, preventing them from learning unique features. According to Analytics Vidhya and Piyush Kashyap (Medium), this <strong>“symmetry problem”</strong> means all neurons learn the same thing, so the network cannot improve and stops learning right from the start.</p>
+<p><strong>2. Small Random Numbers — Tiny Hills or Steep Cliffs</strong></p>
+<p>Imagine letting the traveler start anywhere randomly — they might end up in quicksand, tiny hills, or steep cliffs.</p>
+<p>If we compare this to <strong>Zero Initialization</strong>, which placed every traveler at the exact same spot (all neurons identical), small random numbers do solve the <strong>symmetry problem</strong>: now each traveler (neuron) starts at a slightly different point and can explore different paths.</p>
+<p>However, according to <strong>Analytics Vidhya</strong> and <strong>Piyush Kashyap (Medium)</strong>, the scale of these random values is critical:</p>
+<ul class="simple">
+<li><p><strong>Too small values</strong> → gradients vanish, like walking on flat plains, making learning very slow.</p></li>
+<li><p><strong>Moderate values</strong> → gradients are usable, but still may be unstable without careful scaling.</p></li>
+<li><p><strong>Too large values</strong> → gradients explode, like sliding down a cliff uncontrollably, making training unstable.</p></li>
+</ul>
+<p><strong>Why it is still not advisable:</strong> While small random initialization breaks symmetry and allows neurons to learn differently, it does <strong>not provide any mathematical guarantee</strong> to keep gradients stable across layers. For deep networks, this can lead to <strong>slow convergence or divergence</strong>, which is why methods like <strong>Xavier</strong> and <strong>He</strong> are preferred—they systematically scale weights according to the layer size and activation function to create <strong>safe and balanced terrain</strong> for the traveler from the very start.</p>
+<p><strong>3. Xavier (Glorot) Initialization — Balanced Plateau</strong></p>
+<p>Imagine placing the traveler on a smooth, well-leveled plateau — easy to explore in all directions. Compared to Small Random Numbers, this starting point is carefully calculated, not left to chance.</p>
+<p><strong>Xavier initialization</strong> assigns weights based on the number of inputs (<code class="docutils literal notranslate"><span class="pre">fan_in</span></code>) and outputs (<code class="docutils literal notranslate"><span class="pre">fan_out</span></code>) of a layer to maintain <strong>stable signal variance</strong>. This prevents the traveler from getting stuck in flat regions (vanishing gradients) or sliding down cliffs (exploding gradients).</p>
+<ul class="simple">
+<li><p><strong>Uniform distribution formula:</strong> <br>
+<span class="math notranslate nohighlight">\(
+W \sim \mathcal{U}\Big(-\sqrt{\frac{6}{fan_{in} + fan_{out}}}, \sqrt{\frac{6}{fan_{in} + fan_{out}}}\Big)
+\)</span>
+<br></p></li>
+<li><p><strong>Variance for normal distribution:</strong> <br>
+<span class="math notranslate nohighlight">\(
+Var(W) = \frac{2}{fan_{in} + fan_{out}}
+\)</span></p></li>
+</ul>
+<p>According to <strong>Analytics Vidhya</strong> and <strong>Piyush Kashyap (Medium)</strong>, Xavier works best with <strong>tanh</strong> or <strong>sigmoid</strong> activations. By scaling weights mathematically, it creates <strong>balanced terrain</strong>, allowing the traveler to move steadily without the risks posed by unscaled random weights.</p>
+<p><strong>4. He (Kaiming) Initialization — Energizing Downhill</strong></p>
+<p>Now imagine the traveler starting on a gentle downhill slope — enough momentum to overcome obstacles but not so steep that they lose control. Compared to Xavier, He initialization gives the traveler <strong>extra energy</strong>, which is necessary for ReLU activations that zero out negative signals.</p>
+<p><strong>He initialization</strong> sets the variance based on the number of inputs (<code class="docutils literal notranslate"><span class="pre">fan_in</span></code>) only, compensating for ReLU’s tendency to “kill” half the neurons:</p>
+<p><span class="math notranslate nohighlight">\(
+W \sim \mathcal{N}\Big(0, \sqrt{\frac{2}{fan_{in}}}\Big)
+\)</span></p>
+<p><strong>Why it works:</strong> This energizing starting point ensures gradients remain strong throughout the journey, helping the network converge faster and more reliably. Analytics Vidhya and Piyush Kashyap (Medium) note that He initialization is the standard for <strong>deep ReLU networks</strong>, because it overcomes the limitations of small random numbers while maintaining stable learning.</p>
+<blockquote>
+<div><p><strong>Summary &amp; Comparison:</strong></p>
+<ul class="simple">
+<li><p><strong>Zero Initialization:</strong> All neurons identical → no learning.</p></li>
+<li><p><strong>Small Random Numbers:</strong> Breaks symmetry but may create dangerous terrain (vanishing/exploding gradients).</p></li>
+<li><p><strong>Xavier:</strong> Mathematically balances variance → smooth plateau for tanh/sigmoid activations.</p></li>
+<li><p><strong>He:</strong> Provides extra “energy” for ReLU → gentle downhill, safe, fast, and stable.</p></li>
+</ul>
+</div></blockquote>
+<p>Choosing the right initialization is like choosing the right <strong>terrain for the traveler</strong>: safe, balanced, and suited to the type of journey (activation function and architecture) ensures the model learns efficiently from the very first step.</p>
+</section>
+<section id="experiment-cnn-on-mnist-with-different-initializations">
+<h2><strong>Experiment: CNN on MNIST With Different Initializations</strong><a class="headerlink" href="#experiment-cnn-on-mnist-with-different-initializations" title="Link to this heading">#</a></h2>
+<p>We train a simple CNN on MNIST using:</p>
+<ul class="simple">
+<li><p>Zero initialization</p></li>
+<li><p>Too-small initialization</p></li>
+<li><p>Too-large initialization</p></li>
+<li><p>Incorrect Xavier initialization with ReLU</p></li>
+<li><p>Correct He initialization (paired with ReLU)</p></li>
+</ul>
+<p>We analyze accuracy, loss curves, and training time.</p>
+<p>Here, we focus specifically on how initialization interacts with the network’s activation, which acts like the model’s “compass” guiding the learning journey.</p>
+<p>By exploring these combinations, we will see, epoch by epoch, which strategies allow the model to navigate efficiently, avoid obstacles, and reach its destination successfully.</p>
+<section id="cnn-model-relu-based">
+<h3><strong>CNN Model (ReLU-based)</strong><a class="headerlink" href="#cnn-model-relu-based" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchvision</span><span class="w"> </span><span class="kn">import</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">transforms</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># CNN Architecture</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Corrected the input features for fc1 from 64*7*7 to 64*14*14</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">14</span> <span class="o">*</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># This pooling reduces 28x28 to 14x14</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="initialization-variants-we-tested">
+<h3><strong>Initialization Variants We Tested</strong><a class="headerlink" href="#initialization-variants-we-tested" title="Link to this heading">#</a></h3>
+<section id="zero-initialization">
+<h4><strong>Zero initialization</strong><a class="headerlink" href="#zero-initialization" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">init_zero</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">):</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">constant_</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="too-small-weights">
+<h4><strong>Too-small weights</strong><a class="headerlink" href="#too-small-weights" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">init_too_small</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">):</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">normal_</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="mf">0.00001</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="too-large-weights">
+<h4><strong>Too-large weights</strong><a class="headerlink" href="#too-large-weights" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">init_too_large</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">):</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">normal_</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="incorrect-relu-initializer-xavier">
+<h4><strong>Incorrect ReLU initializer (Xavier)</strong><a class="headerlink" href="#incorrect-relu-initializer-xavier" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">init_xavier</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">):</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">xavier_normal_</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="correct-relu-initializer-he">
+<h4><strong>Correct ReLU initializer (He)</strong><a class="headerlink" href="#correct-relu-initializer-he" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">init_he</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">):</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">kaiming_normal_</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="n">nonlinearity</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="training-loop">
+<h3><strong>Training Loop</strong><a class="headerlink" href="#training-loop" title="Link to this heading">#</a></h3>
+<p>The training loop runs for 20 epochs, processing all MNIST training images in batches of 64. For each batch, the CNN performs a forward pass to compute predictions, calculates the cross-entropy loss, backpropagates the gradients, and updates the weights using the Adam optimizer with a learning rate of 0.001. After each epoch, the average loss, training accuracy, and epoch duration are recorded. Once training is complete, the model is evaluated on the test set to measure final loss and accuracy. The choice of 20 epochs strikes a balance between giving the model enough time to converge and keeping the experiments efficient for multiple initialization variants. Importantly, this entire setup — including batch size, number of epochs, learning rate, optimizer, and evaluation procedure — is kept identical across all initialization methods, ensuring that any differences in training behavior or final performance can be attributed solely to the weight initialization.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">train_model</span><span class="p">(</span><span class="n">initializer</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">CNN</span><span class="p">()</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">initializer</span><span class="p">)</span>
+
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+    <span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()])</span>
+
+    <span class="c1"># Training data</span>
+    <span class="n">train_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+    <span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Test / Holdout data</span>
+    <span class="n">test_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+    <span class="n">test_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">train_losses</span><span class="p">,</span> <span class="n">train_accuracies</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="n">epoch_times</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== Training with </span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2"> Initialization ===&quot;</span><span class="p">)</span>
+
+    <span class="n">total_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="c1"># Training loop with tqdm</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+        <span class="n">total</span><span class="p">,</span> <span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="n">epoch_loss</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">epoch_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">train_loader</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">/20&quot;</span><span class="p">,</span> <span class="n">leave</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+            <span class="n">epoch_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+            <span class="n">_</span><span class="p">,</span> <span class="n">predicted</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">labels</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">correct</span> <span class="o">+=</span> <span class="p">(</span><span class="n">predicted</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+        <span class="c1"># Store results</span>
+        <span class="n">train_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">epoch_loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">))</span>
+        <span class="n">train_accuracies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">total</span><span class="p">)</span>
+
+        <span class="c1"># Save epoch time</span>
+        <span class="n">epoch_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">epoch_start</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2"> | Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">: Loss=</span><span class="si">{</span><span class="n">train_losses</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, Acc=</span><span class="si">{</span><span class="n">train_accuracies</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ------- Training Time Summary -------</span>
+    <span class="n">total_training_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">total_start</span>
+    <span class="n">avg_epoch_time</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">epoch_times</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">epoch_times</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total Training Time for </span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">total_training_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average Time per Epoch across 20 epochs: </span><span class="si">{</span><span class="n">avg_epoch_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ------- Evaluate on Test Set -------</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="n">total_test</span><span class="p">,</span> <span class="n">correct_test</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="n">test_loss</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+            <span class="n">test_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+            <span class="n">_</span><span class="p">,</span> <span class="n">predicted</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">total_test</span> <span class="o">+=</span> <span class="n">labels</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">correct_test</span> <span class="o">+=</span> <span class="p">(</span><span class="n">predicted</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+    <span class="n">test_loss</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">)</span>
+    <span class="n">test_accuracy</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">correct_test</span> <span class="o">/</span> <span class="n">total_test</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2"> | Test Set Results → Loss=</span><span class="si">{</span><span class="n">test_loss</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, Acc=</span><span class="si">{</span><span class="n">test_accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;train_losses&quot;</span><span class="p">:</span> <span class="n">train_losses</span><span class="p">,</span>
+        <span class="s2">&quot;train_accuracies&quot;</span><span class="p">:</span> <span class="n">train_accuracies</span><span class="p">,</span>
+        <span class="s2">&quot;test_loss&quot;</span><span class="p">:</span> <span class="n">test_loss</span><span class="p">,</span>
+        <span class="s2">&quot;test_accuracy&quot;</span><span class="p">:</span> <span class="n">test_accuracy</span><span class="p">,</span>
+        <span class="s2">&quot;total_train_time&quot;</span><span class="p">:</span> <span class="n">total_training_time</span><span class="p">,</span>
+        <span class="s2">&quot;avg_epoch_time&quot;</span><span class="p">:</span> <span class="n">avg_epoch_time</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="run-all-initializers">
+<h3><strong>Run All Initializers</strong><a class="headerlink" href="#run-all-initializers" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inits</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Zero Initialization&quot;</span><span class="p">:</span> <span class="n">init_zero</span><span class="p">,</span>
+    <span class="s2">&quot;Too Small Random&quot;</span><span class="p">:</span> <span class="n">init_too_small</span><span class="p">,</span>
+    <span class="s2">&quot;Too Large Random&quot;</span><span class="p">:</span> <span class="n">init_too_large</span><span class="p">,</span>
+    <span class="s2">&quot;Xavier Init (Incorrect for ReLU)&quot;</span><span class="p">:</span> <span class="n">init_xavier</span><span class="p">,</span>
+    <span class="s2">&quot;He Init (Correct for ReLU)&quot;</span><span class="p">:</span> <span class="n">init_he</span>
+<span class="p">}</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">initializer_fn</span> <span class="ow">in</span> <span class="n">inits</span><span class="o">.</span><span class="n">items</span><span class="p">():</span> 
+    <span class="n">metrics</span> <span class="o">=</span> <span class="n">train_model</span><span class="p">(</span><span class="n">initializer_fn</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="c1"># Store everything returned by train_model</span>
+    <span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">metrics</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== Training with Zero Initialization Initialization ===
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 01: Loss=2.3019, Acc=10.88%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 02: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 03: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 04: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 05: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 06: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 07: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 08: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 09: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 10: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 11: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 12: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 13: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 14: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 15: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 16: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 17: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 18: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 19: Loss=2.3013, Acc=11.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Zero Initialization | Epoch 20: Loss=2.3013, Acc=11.24%
+
+Total Training Time for Zero Initialization: 2646.81 seconds
+Average Time per Epoch across 20 epochs: 132.34 seconds
+
+Zero Initialization | Test Set Results → Loss=2.3010, Acc=11.35%
+
+=== Training with Too Small Random Initialization ===
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 01: Loss=1.4595, Acc=44.32%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 02: Loss=0.8374, Acc=72.61%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 03: Loss=0.7495, Acc=75.88%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 04: Loss=0.7110, Acc=77.28%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 05: Loss=0.6852, Acc=78.26%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 06: Loss=0.6538, Acc=79.67%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 07: Loss=0.6107, Acc=81.33%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 08: Loss=0.5657, Acc=82.94%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 09: Loss=0.5196, Acc=84.63%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 10: Loss=0.4681, Acc=86.51%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 11: Loss=0.4188, Acc=88.15%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 12: Loss=0.3718, Acc=89.58%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 13: Loss=0.3354, Acc=90.51%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 14: Loss=0.3026, Acc=91.49%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 15: Loss=0.2760, Acc=92.27%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 16: Loss=0.2561, Acc=92.89%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 17: Loss=0.2359, Acc=93.39%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 18: Loss=0.2200, Acc=93.73%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 19: Loss=0.2066, Acc=94.13%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Small Random | Epoch 20: Loss=0.1943, Acc=94.51%
+
+Total Training Time for Too Small Random: 2608.37 seconds
+Average Time per Epoch across 20 epochs: 130.42 seconds
+
+Too Small Random | Test Set Results → Loss=0.2159, Acc=94.13%
+
+=== Training with Too Large Random Initialization ===
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 01: Loss=29122366.4883, Acc=41.50%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 02: Loss=5467828.1679, Acc=75.88%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 03: Loss=3221399.4090, Acc=83.73%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 04: Loss=2321597.6870, Acc=87.23%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 05: Loss=1800853.2323, Acc=89.24%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 06: Loss=1443566.5291, Acc=90.61%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 07: Loss=1183701.5909, Acc=91.70%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 08: Loss=993625.6257, Acc=92.62%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 09: Loss=849425.3498, Acc=93.33%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 10: Loss=735308.2706, Acc=93.95%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                                
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 11: Loss=643847.8696, Acc=94.42%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 12: Loss=564434.8323, Acc=94.89%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 13: Loss=500421.5892, Acc=95.21%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 14: Loss=439188.3642, Acc=95.64%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 15: Loss=390283.8316, Acc=95.98%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 16: Loss=348779.3642, Acc=96.20%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 17: Loss=311827.7319, Acc=96.52%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 18: Loss=278175.1299, Acc=96.76%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 19: Loss=248491.8648, Acc=97.01%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Too Large Random | Epoch 20: Loss=223224.0932, Acc=97.25%
+
+Total Training Time for Too Large Random: 2637.08 seconds
+Average Time per Epoch across 20 epochs: 131.85 seconds
+
+Too Large Random | Test Set Results → Loss=533112.1803, Acc=95.14%
+
+=== Training with Xavier Init (Incorrect for ReLU) Initialization ===
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 01: Loss=0.1695, Acc=94.90%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 02: Loss=0.0475, Acc=98.59%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 03: Loss=0.0313, Acc=98.98%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 04: Loss=0.0215, Acc=99.32%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 05: Loss=0.0169, Acc=99.43%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 06: Loss=0.0111, Acc=99.63%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 07: Loss=0.0099, Acc=99.66%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 08: Loss=0.0090, Acc=99.67%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 09: Loss=0.0075, Acc=99.74%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 10: Loss=0.0059, Acc=99.81%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 11: Loss=0.0051, Acc=99.82%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 12: Loss=0.0051, Acc=99.81%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 13: Loss=0.0036, Acc=99.89%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 14: Loss=0.0038, Acc=99.87%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 15: Loss=0.0024, Acc=99.92%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 16: Loss=0.0041, Acc=99.89%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 17: Loss=0.0039, Acc=99.86%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 18: Loss=0.0020, Acc=99.94%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 19: Loss=0.0035, Acc=99.89%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Xavier Init (Incorrect for ReLU) | Epoch 20: Loss=0.0033, Acc=99.89%
+
+Total Training Time for Xavier Init (Incorrect for ReLU): 2075.68 seconds
+Average Time per Epoch across 20 epochs: 103.78 seconds
+
+Xavier Init (Incorrect for ReLU) | Test Set Results → Loss=0.0496, Acc=99.04%
+
+=== Training with He Init (Correct for ReLU) Initialization ===
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 01: Loss=0.1322, Acc=95.95%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 02: Loss=0.0355, Acc=98.88%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 03: Loss=0.0214, Acc=99.35%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 04: Loss=0.0140, Acc=99.54%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 05: Loss=0.0098, Acc=99.66%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 06: Loss=0.0087, Acc=99.71%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 07: Loss=0.0060, Acc=99.80%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 08: Loss=0.0066, Acc=99.79%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 09: Loss=0.0055, Acc=99.83%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 10: Loss=0.0040, Acc=99.87%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 11: Loss=0.0046, Acc=99.86%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 12: Loss=0.0033, Acc=99.89%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 13: Loss=0.0044, Acc=99.88%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 14: Loss=0.0020, Acc=99.94%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 15: Loss=0.0025, Acc=99.91%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 16: Loss=0.0029, Acc=99.91%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 17: Loss=0.0024, Acc=99.93%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 18: Loss=0.0022, Acc=99.92%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 19: Loss=0.0040, Acc=99.89%
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                              
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He Init (Correct for ReLU) | Epoch 20: Loss=0.0026, Acc=99.92%
+
+Total Training Time for He Init (Correct for ReLU): 1920.69 seconds
+Average Time per Epoch across 20 epochs: 96.03 seconds
+
+He Init (Correct for ReLU) | Test Set Results → Loss=0.0605, Acc=99.00%
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="plotting-accuracy-and-loss">
+<h3><strong>Plotting Accuracy and Loss</strong><a class="headerlink" href="#plotting-accuracy-and-loss" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">plot_initialization_results()</span></code> function visualizes model performance across different initialization variants by generating a dual-axis plot for each variant. It displays training loss over epochs on the left y-axis and training accuracy on the right y-axis, allowing both metrics to be viewed simultaneously. The function also highlights the final test accuracy with a red marker to clearly show the model’s generalization performance. The average epoch time is included in the plot title to provide additional insight into training efficiency. This visualization helps compare how different initialization strategies affect convergence behavior, training stability, and final accuracy which are discussed in the next section.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_initialization_results</span><span class="p">(</span><span class="n">results_dict</span><span class="p">,</span> <span class="n">variants_to_plot</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">variants_to_plot</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">variants_to_plot</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">results_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="k">for</span> <span class="n">variant</span> <span class="ow">in</span> <span class="n">variants_to_plot</span><span class="p">:</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">results_dict</span><span class="p">[</span><span class="n">variant</span><span class="p">]</span>
+
+        <span class="n">train_losses</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;train_losses&quot;</span><span class="p">]</span>
+        <span class="n">train_accuracies</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;train_accuracies&quot;</span><span class="p">]</span>
+        <span class="n">test_accuracy</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;test_accuracy&quot;</span><span class="p">]</span>
+        <span class="n">avg_epoch_time</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;avg_epoch_time&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">epochs</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_losses</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+        <span class="c1"># === Training Loss (left y-axis, BLUE) ===</span>
+        <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="n">epochs</span><span class="p">,</span>
+            <span class="n">train_losses</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Loss&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span>
+            <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span>
+        <span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Epoch&quot;</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Loss&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># === Training Accuracy (right y-axis, ORANGE) ===</span>
+        <span class="n">ax2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="n">epochs</span><span class="p">,</span>
+            <span class="n">train_accuracies</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Accuracy&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span>
+            <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span>
+            <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span>
+        <span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">train_accuracies</span><span class="p">),</span>
+            <span class="n">test_accuracy</span><span class="p">,</span>
+            <span class="n">s</span><span class="o">=</span><span class="mi">130</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test Accuracy&quot;</span><span class="p">,</span>
+            <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span>
+        <span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Accuracy (%)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">)</span>
+
+        <span class="c1"># === Combine legends from both axes ===</span>
+        <span class="n">lines1</span><span class="p">,</span> <span class="n">labels1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+        <span class="n">lines2</span><span class="p">,</span> <span class="n">labels2</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">lines1</span> <span class="o">+</span> <span class="n">lines2</span><span class="p">,</span> <span class="n">labels1</span> <span class="o">+</span> <span class="n">labels2</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;center right&quot;</span><span class="p">)</span>
+
+        <span class="c1"># === Title with optional avg epoch time ===</span>
+        <span class="k">if</span> <span class="n">avg_epoch_time</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">variant</span><span class="si">}</span><span class="s2">  |  Avg Epoch Time: </span><span class="si">{</span><span class="n">avg_epoch_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> sec&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">variant</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="results-how-the-travelers-journey-changed">
+<h2><strong>Results: How the Traveler’s Journey Changed</strong><a class="headerlink" href="#results-how-the-travelers-journey-changed" title="Link to this heading">#</a></h2>
+<p>Again, think of a neural network as a traveler embarking on a long journey across MNIST dataset. The starting terrain—the weight initialization—determines how easy or treacherous the path will be. Let’s explore the journeys of travelers under different initializations and what actually happened during training.</p>
+<section id="zero-initialization-stuck-on-the-flat-plateau">
+<h3><strong>Zero Initialization — Stuck on the Flat Plateau</strong><a class="headerlink" href="#zero-initialization-stuck-on-the-flat-plateau" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_initialization_results</span><span class="p">(</span>
+    <span class="n">results</span><span class="p">,</span>
+    <span class="n">variants_to_plot</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Zero Initialization&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5f2e160f4db983c8bd33dfacc980938338a88180c6baaa1c916ce21392ac02c0.png" src="../_images/5f2e160f4db983c8bd33dfacc980938338a88180c6baaa1c916ce21392ac02c0.png" />
+</div>
+</div>
+<p>The phenomenon of <strong>Zero Initialization</strong> is perfectly captured by the analogy: <strong>it is like placing all travelers at the exact same spot on a completely flat plateau, each with identical compasses, meaning they can’t choose different paths because all instructions are the same.</strong> The plot results confirm this failure to break symmetry: throughout <strong>20 epochs</strong> and <strong>2646 seconds</strong> of training, the <strong>Training Loss</strong> (blue solid line) barely decreased from 2.302 to 2.301. Visually, this is represented by a <strong>strictly horizontal line at 2.30</strong>, demonstrating the network’s inability to minimize error and descend the loss landscape. Similarly, the <strong>Training Accuracy</strong> (orange dashed line) remained stagnant at around <strong>11%</strong>, the level of random guessing (likely for 10 classes). All neurons received identical gradients, so <strong>no neuron learned unique features</strong>, confirming the claim that the network “stood still.” This complete lack of progress is further evidenced by the poor generalization, as the <strong>Test Accuracy</strong> (red marker) also settled at a low <strong>11.35%</strong>, showing the traveler never truly left the starting plateau.</p>
+</section>
+<section id="too-small-random-initialization-tiptoeing-on-tiny-hills">
+<h3><strong>Too Small Random Initialization — Tiptoeing on Tiny Hills</strong><a class="headerlink" href="#too-small-random-initialization-tiptoeing-on-tiny-hills" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_initialization_results</span><span class="p">(</span>
+    <span class="n">results</span><span class="p">,</span>
+    <span class="n">variants_to_plot</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Too Small Random&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f60ff6337585c089cfb489a4c7de5b9535170d6222af10570b853ad8d25afa67.png" src="../_images/f60ff6337585c089cfb489a4c7de5b9535170d6222af10570b853ad8d25afa67.png" />
+</div>
+</div>
+<p>Using very small random weights is perfectly illustrated as <strong>it is like putting the traveler on tiny hills, where they can explore, but every step is cautious and slow.</strong> The plot confirms this <strong>cautious but steady</strong> progression, avoiding the symmetry problem seen in zero initialization. The network started improving quickly, which is visually demonstrated by the <strong>Training Accuracy</strong> (orange dashed line) soaring immediately from near zero to <strong>78% by epoch 5</strong>. Correspondingly, the <strong>Training Loss</strong> (blue solid line) dropped sharply from 1.46 to 0.68, staying very close to the x-axis, confirming that the loss is being minimized effectively. The progress continued steadily, reaching <strong>86.5% accuracy by epoch 10</strong>, with the accuracy curve showing a gentle, sustained upward trend rather than a sharp jump, demonstrating gradual learning. The training process continued until epoch 20, where the training accuracy reached a high of <strong>94.5%</strong>. Crucially, the <strong>Test Accuracy</strong> (red marker at 94.13%) tracks the training accuracy closely, confirming that the weak, non-zero gradients allowed for <strong>reliable learning and excellent generalization</strong>. This scenario shows a journey that was safe but not optimal for speed, resulting in slow learning but reliable results, as the traveler tiptoes forward.</p>
+</section>
+<section id="too-large-random-initialization-sliding-down-steep-cliffs">
+<h3><strong>Too Large Random Initialization — Sliding Down Steep Cliffs</strong><a class="headerlink" href="#too-large-random-initialization-sliding-down-steep-cliffs" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_initialization_results</span><span class="p">(</span>
+    <span class="n">results</span><span class="p">,</span>
+    <span class="n">variants_to_plot</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Too Large Random&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/95e338589200dfd66264f330ba9704ac3d709226fda0288bfebe486d4d7e4755.png" src="../_images/95e338589200dfd66264f330ba9704ac3d709226fda0288bfebe486d4d7e4755.png" />
+</div>
+</div>
+<p>The use of <strong>Too Large Random Weights</strong> can be described as <strong>it is like starting on a steep cliff, where the traveler slides quickly, sometimes uncontrollably.</strong> The plot dramatically confirms this chaotic initial state, showing extreme instability and eventual recovery. The <strong>Training Loss</strong> (blue solid line) starts at an enormous value, exceeding <strong>29 million</strong> in Epoch 1. This initial catastrophic loss value is the visual evidence of <strong>exploding gradients</strong> delaying stable learning. Simultaneously, the <strong>Training Accuracy</strong> (orange dashed line) starts low at <strong>41.5%</strong> but then soars almost vertically. Despite the unstable start, the network quickly regained control and accelerated learning: the accuracy reached <strong>89.2% by epoch 5</strong> and <strong>93.95% by epoch 10</strong>, visually confirming the traveler’s rapid recovery and descent toward the optimum. By the final epoch, a high training accuracy of <strong>97.25%</strong> was achieved, with the <strong>Test Accuracy</strong> (red marker) closely following at <strong>95.14%</strong>. While the final generalization was good, the initial epochs wasted effort recovering from the extreme loss, making the journey long and risky.</p>
+</section>
+<section id="xavier-initialization-the-balanced-plateau">
+<h3><strong>Xavier Initialization — The Balanced Plateau</strong><a class="headerlink" href="#xavier-initialization-the-balanced-plateau" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_initialization_results</span><span class="p">(</span>
+    <span class="n">results</span><span class="p">,</span>
+    <span class="n">variants_to_plot</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Xavier Init (Incorrect for ReLU)&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d4f04580ecc351727ff3a731c6a9c6bb63b21c781aedb691cb66189237fe1b89.png" src="../_images/d4f04580ecc351727ff3a731c6a9c6bb63b21c781aedb691cb66189237fe1b89.png" />
+</div>
+</div>
+<p>The use of <strong>Xavier Initialization (Incorrect for ReLU)</strong> is best described as placing the traveler on a <strong>mathematically leveled plateau</strong>, providing a smooth path that allows exploration without the danger of getting stuck (like <strong>Zero Initialization</strong>) or sliding uncontrollably (like <strong>Too Large Random</strong> initialization).  The plot and detailed results visually confirm this <strong>highly efficient</strong> training regime, immediately overcoming the <strong>cautious and slow climb</strong> seen with the <strong>Too Small Random</strong> method.</p>
+<p>The network demonstrates extremely rapid learning: the <strong>Training Accuracy</strong> (orange dashed line) made a dramatic jump from <strong>94.90% (Epoch 1)</strong> to <strong>99.43% by Epoch 5</strong>, reaching near-maximum performance almost immediately. Correspondingly, the <strong>Training Loss</strong> (blue solid line) shows a <strong>rapid and sustained drop</strong>, plummeting from its initial value of <strong>0.1695</strong> down to <strong>0.0169 by Epoch 5</strong>, stabilizing quickly near the x-axis for the remainder of the training. The network achieved a very high training accuracy of <strong>99.81% by Epoch 10</strong> and sustained this performance, peaking at <strong>99.94% by Epoch 18</strong>. A closer visual inspection shows <strong>subtle, minimal up-and-down movement</strong> in the accuracy curve across the epochs, suggesting a slight <strong>unstable oscillation</strong>. This minor imperfection is expected because <strong>Xavier is theoretically sub-optimal for ReLU</strong> activation functions. Despite this slight instability, the overall training was efficient, taking <strong>103.78 seconds per epoch</strong>. The traveler successfully reached the target quickly without slips or unnecessary caution, leading to <strong>excellent generalizability</strong>, as confirmed by the final <strong>Test Accuracy</strong> of <strong>99.04%</strong> (Test Loss: 0.0496), which sits very close to the peak training accuracy.</p>
+</section>
+<section id="he-initialization-energizing-downhill">
+<h3><strong>He Initialization — Energizing Downhill</strong><a class="headerlink" href="#he-initialization-energizing-downhill" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_initialization_results</span><span class="p">(</span>
+    <span class="n">results</span><span class="p">,</span>
+    <span class="n">variants_to_plot</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;He Init (Correct for ReLU)&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/caec745d05ea66efadcc7be8bc36e711e70b385a66d189ffe13157a258ebfde4.png" src="../_images/caec745d05ea66efadcc7be8bc36e711e70b385a66d189ffe13157a258ebfde4.png" />
+</div>
+</div>
+<p>The <strong>He Initialization (Correct for ReLU)</strong> provides the optimal training environment, giving the traveler a <strong>gentle downhill slope</strong>—<strong>just enough momentum to accelerate without losing control.</strong> The plot and results confirm that <strong>He Initialization is superior to Xavier</strong> for this ReLU network.</p>
+<p>This method demonstrated <strong>significantly faster and more stable learning</strong> than all previous initializations. The <strong>Training Loss</strong> (blue solid line) began lower than Xavier (0.1322 vs. 0.1695) and reached <strong>99.54% accuracy by Epoch 4</strong> while loss was <strong>0.0140</strong>, beating Xavier’s time (Xavier hit 99.43% only by Epoch 5 at 0.0169 loss). This accelerated initial phase demonstrates the <strong>more energized start</strong> given to the traveler. Furthermore, the overall training was more <strong>efficient</strong>, with an <strong>Average Epoch Time of 96.03 seconds</strong>, which is nearly <strong>8 seconds faster per epoch</strong> than Xavier’s 103.78 seconds.</p>
+<p>The accuracy curve (orange dashed line) shows a rapid, smooth climb that quickly stabilizes near <strong>100%</strong>, confirming that the strong gradients prevented “dead neurons” from slowing learning, a major benefit over “Too Small Random.” Training accuracy ultimately peaked at <strong>99.93%</strong>—slightly higher than Xavier’s 99.89% peak. Most importantly, the <strong>Training and Test Accuracy curves stayed closely aligned</strong> across the entire plot, resulting in excellent generalizability, with the <strong>Test Accuracy</strong> (red marker) at <strong>99.00%</strong>. He initialization provided the fastest, most predictable, and most efficient path to high performance.</p>
+</section>
+</section>
+<section id="ending-the-story-starting-in-the-right-place">
+<h2><strong>Ending the Story: Starting in the Right Place</strong><a class="headerlink" href="#ending-the-story-starting-in-the-right-place" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Initialization Method</p></th>
+<th class="head text-left"><p>Analogy</p></th>
+<th class="head text-left"><p>Final Train Accuracy</p></th>
+<th class="head text-left"><p>Avg. Epoch Time (sec)</p></th>
+<th class="head text-left"><p>Summary of Performance</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>Zero</strong></p></td>
+<td class="text-left"><p>Flat Plateau</p></td>
+<td class="text-left"><p>11.24%</p></td>
+<td class="text-left"><p>132.34</p></td>
+<td class="text-left"><p><strong>Failure</strong>; Stuck due to symmetry.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Too Small</strong></p></td>
+<td class="text-left"><p>Tiny Hills</p></td>
+<td class="text-left"><p>94.51%</p></td>
+<td class="text-left"><p>130.42</p></td>
+<td class="text-left"><p><strong>Slow</strong>; Reliable but constrained by weak gradients.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Too Large</strong></p></td>
+<td class="text-left"><p>Steep Cliff</p></td>
+<td class="text-left"><p>97.25%</p></td>
+<td class="text-left"><p>131.85</p></td>
+<td class="text-left"><p><strong>Chaotic</strong>; High risk, high instability, eventual recovery.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Xavier</strong></p></td>
+<td class="text-left"><p>Leveled Plateau</p></td>
+<td class="text-left"><p>99.89%</p></td>
+<td class="text-left"><p>103.78</p></td>
+<td class="text-left"><p><strong>Fast</strong>; Highly efficient, but slightly sub-optimal for ReLU.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>He</strong></p></td>
+<td class="text-left"><p>Gentle Downhill</p></td>
+<td class="text-left"><p><strong>99.92%</strong></p></td>
+<td class="text-left"><p><strong>96.03</strong></p></td>
+<td class="text-left"><p><strong>Optimal</strong>; Fastest, most stable, and most efficient.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The journeys clearly show the influence of weight initialization. Zero and tiny hills constrained movement, steep cliffs created initial chaos, Xavier offered a smooth plateau, and He provided an energizing downhill path. Importantly, He initialization not only achieved faster convergence and high accuracy, but also maintained excellent generalization and stable loss reduction, proving that the theoretical “energized start for ReLU” claim holds true in practice. Choosing the right starting terrain ensures the traveler reaches the destination safely, efficiently, and reliably.</p>
+<p><img alt="Alt Text" src="../_images/weight2.png" /></p>
+<p>A model’s journey through the loss landscape is long.
+Initialization determines whether it starts:</p>
+<p><em><strong>in a valley</strong></em></p>
+<p><em><strong>on a cliff</strong></em></p>
+<p><em><strong>in a desert</strong></em></p>
+<p><em><strong>or on a well-balanced plateau</strong></em></p>
+<p>Good initialization does not guarantee success —
+but bad initialization guarantees failure.</p>
+<p>Choosing the right weight initialization acts as the GPS, guiding your model past the traps and straight to the best starting point. <br>
+This GPS doesn’t walk for you, but it guarantees the fastest, most reliable way to the summit.</p>
+<p>Now, you stand here. The vibrant sunset is the beautiful result of following that guidance. <br>
+The learning is complete, the journey is a success, and the model’s work is finished.</p>
+</section>
+<section id="references">
+<h2><strong>References</strong><a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<p>Goyal, C. (2024, February 15). <em>How to initialize weights in neural networks?</em> Analytics Vidhya. Retrieved November 19, 2025, from <a class="reference external" href="https://www.analyticsvidhya.com/blog/2021/05/how-to-initialize-weights-in-neural-networks/">https://www.analyticsvidhya.com/blog/2021/05/how-to-initialize-weights-in-neural-networks/</a></p>
+<p>Kashyap, P. (2024, November 2). <em>Mastering weight initialization in neural networks: A beginner’s guide</em>. Medium. Retrieved November 19, 2025, from <a class="reference external" href="https://medium.com/&#64;piyushkashyap045/mastering-weight-initialization-in-neural-networks-a-beginners-guide-6066403140e9">https://medium.com/&#64;piyushkashyap045/mastering-weight-initialization-in-neural-networks-a-beginners-guide-6066403140e9</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "fracture_env"
+        },
+        kernelOptions: {
+            name: "fracture_env",
+            path: "./Laboratories"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'fracture_env'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="laboratory7.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong>7 Exploring Hyperparameters (Activation Functions and Optimizers)</strong></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Project/intro.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><strong>Project</strong></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-landscape-and-the-traveler"><strong>The Landscape and the Traveler</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-weight-initialization-actually-does"><strong>What Weight Initialization Actually Does</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-right-gps-coordinates-criteria-for-initialization"><strong>Choosing the Right GPS Coordinates: Criteria For Initialization</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-main-initialization-methods-and-what-terrain-they-create"><strong>The Main Initialization Methods And What Terrain They Create</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experiment-cnn-on-mnist-with-different-initializations"><strong>Experiment: CNN on MNIST With Different Initializations</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cnn-model-relu-based"><strong>CNN Model (ReLU-based)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization-variants-we-tested"><strong>Initialization Variants We Tested</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#zero-initialization"><strong>Zero initialization</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#too-small-weights"><strong>Too-small weights</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#too-large-weights"><strong>Too-large weights</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#incorrect-relu-initializer-xavier"><strong>Incorrect ReLU initializer (Xavier)</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#correct-relu-initializer-he"><strong>Correct ReLU initializer (He)</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-loop"><strong>Training Loop</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-all-initializers"><strong>Run All Initializers</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-accuracy-and-loss"><strong>Plotting Accuracy and Loss</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-how-the-travelers-journey-changed"><strong>Results: How the Traveler’s Journey Changed</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zero-initialization-stuck-on-the-flat-plateau"><strong>Zero Initialization — Stuck on the Flat Plateau</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#too-small-random-initialization-tiptoeing-on-tiny-hills"><strong>Too Small Random Initialization — Tiptoeing on Tiny Hills</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#too-large-random-initialization-sliding-down-steep-cliffs"><strong>Too Large Random Initialization — Sliding Down Steep Cliffs</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xavier-initialization-the-balanced-plateau"><strong>Xavier Initialization — The Balanced Plateau</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#he-initialization-energizing-downhill"><strong>He Initialization — Energizing Downhill</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ending-the-story-starting-in-the-right-place"><strong>Ending the Story: Starting in the Right Place</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references"><strong>References</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Nicole Menorias
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
